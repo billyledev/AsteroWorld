@@ -21,7 +21,7 @@ class Game
         //On créé un contexte 2D à partir du canvas
         this.ctx = this.canvas.getContext('2d');
 
-        requestAnimationFrame(this.animate);
+        requestAnimationFrame(this.animate.bind(this));
     }
 
     //Gère le dessin du jeu
@@ -29,6 +29,6 @@ class Game
     {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
-        requestAnimationFrame(this.animate);
+        requestAnimationFrame(this.animate.bind(this));
     }
 }
