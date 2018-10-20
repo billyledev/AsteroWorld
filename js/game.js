@@ -1,33 +1,34 @@
 //Fonction appelée à la fin du chargement du DOM
 window.addEventListener('load', () => {
-    //On récupère l'élément canvas
-    let canvas = document.querySelector('canvas');
+    //On créé une nouvelle instance du jeu
+    let game = new Game();
+    game.init();
+});
 
-    //La largeur et hauteur du canvas
-    let width = canvas.width;
-    let height = canvas.height;
-
-    //On créé un contexte 2D à partir du canvasÒ
-    let ctx = canvas.getContext('2d');
-
-
-
+//Classe de gestion du jeu
+class Game
+{
     //Gère l'initialisation du jeu
-    function init()
+    init()
     {
-        animate();
+        //On récupère l'élément canvas
+        this.canvas = document.querySelector('canvas');
+
+        //On récupère la largeur et la hauteur du canvas
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
+
+        //On créé un contexte 2D à partir du canvas
+        this.ctx = this.canvas.getContext('2d');
+
+        requestAnimationFrame(this.animate);
     }
 
     //Gère le dessin du jeu
-    function animate()
+    animate()
     {
-        ctx.clearRect(0, 0, width, height);
+        this.ctx.clearRect(0, 0, this.width, this.height);
 
-        requestAnimationFrame(animate);
+        requestAnimationFrame(this.animate);
     }
-
-
-
-    //On appelle la fonction d'initialisation
-    init();
-});
+}
