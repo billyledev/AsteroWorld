@@ -68,6 +68,16 @@ L'utilisateur se déplace dans la carte et tir sur les astéroïdes. Si un tir a
 
 Un utilisateur a trois vie au début de la partie. Quand il entre en collision avec un astéroïde, ce dernier perd une vie. Si il perd toutes ses vies, alors la partie est perdue et il est amené à entrer son nom pour apparaitre dans le classement des meilleurs scores.
 
+Au fur et à mesure que l'utilisateur détruit des astéroïdes, on créé de plus en plus de nouveaux astéroïdes.
+
+### Achats
+
+Nous voulons mettre en place une boutique dans le jeu. L'utilisateur pourrait acheter différents vaisseaux et différents fonds de carte avec les pièces récupérées en jeu.
+
+Voici la liste actuelle des achats disponibles dans la boutique :
+* Nouveau vaisseau : de 50 à 10000 pièces
+* Nouveau fond : de 100 à 200000 pièces
+
 ### Bonus
 
 Les bonus permettent, pendant un temps limité, d'augmenté les capacités de l'utilisateur.
