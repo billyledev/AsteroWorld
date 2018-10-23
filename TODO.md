@@ -52,6 +52,24 @@ Liste des fonds à réaliser :
 
 ---
 
+## Ressources audios
+
+### Bruitages à réaliser
+
+Les bruitages peuvent être des sons au format wav, ogg, ... ou des sons créés à partir de la bibliothèque WebAudio.
+
+Liste des bruitages à réaliser :
+* Tir du vaisseau
+* Explosion d'un astéroïde
+* Collision entre le vaisseau et un astéroïde
+* Bonus récupéré
+
+### Musiques à réaliser
+
+Nous pourrons ajouter dans le futur un thème musical pour le jeu afin d'améliorer l'expérience utilisateur.
+
+---
+
 ## Moteur graphique
 
 Notre jeu sera en 2D. Nous pourrons donc utiliser les fonctions de dessin basiques qui viennent avec l'utilisation d'un contexte 2D.
@@ -64,11 +82,13 @@ Nous avons aussi prévu d'implémenter un système de lumière. Pour cela, nous 
 
 ### Principe de base
 
-L'utilisateur se déplace dans la carte et tir sur les astéroïdes. Si un tir atteint un astéroïde et que ce dernier n'est pas un petit astéroïde, il se divise en deux astéroïdes plus petits. Si un tir atteint un petit astéroïdes, ce dernier est détruit et l'utilisateur gagne 5 pièces.
+L'utilisateur se déplace dans la carte et tir sur les astéroïdes. Si un tir atteint un astéroïde et que ce dernier n'est pas un petit astéroïde, il se divise en deux astéroïdes plus petits. Si un tir atteint un petit astéroïdes, ce dernier est détruit et l'utilisateur gagne 5 pièces. Un astéroïdes peut parfois entrainer la création d'un bonus à sa destruction.
 
 Un utilisateur a trois vie au début de la partie. Quand il entre en collision avec un astéroïde, ce dernier perd une vie. Si il perd toutes ses vies, alors la partie est perdue et il est amené à entrer son nom pour apparaitre dans le classement des meilleurs scores.
 
 Au fur et à mesure que l'utilisateur détruit des astéroïdes, on créé de plus en plus de nouveaux astéroïdes.
+
+Les bonus facilitent temporairement le jeu et permettent à l'utilisateur de prolonger les parties.
 
 ### Achats
 
@@ -80,9 +100,14 @@ Voici la liste actuelle des achats disponibles dans la boutique :
 
 ### Bonus
 
-Les bonus permettent, pendant un temps limité, d'augmenté les capacités de l'utilisateur.
+Les bonus permettent, pendant un temps limité, d'augmenté les capacités de l'utilisateur. Il sont générés lors de la destruction des astéroïdes avec un taux d'apparition prédéfini.
 
 Voici la liste actuelle des bonus avec leur caractéristiques :
 * Tir rapide : le nombre de tir est doublé pendant 10 secondes
 * Invincibilité : le vaisseau devient insensible aux chocs avec les astéroïdes pendant 10 secondes
 * Destruction instantanée : un tir suffit à détruire instantanément toute taille d'astéroïde pendant 10 secondes
+
+Taux d'apparition des bonus :
+* Tir rapide : 1/500
+* Invincibilité : 1/1000
+* Destruction instantanée : 1/100
