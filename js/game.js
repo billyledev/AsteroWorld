@@ -30,13 +30,23 @@ class Game
     animate()
     {
         this.ctx.clearRect(0, 0, this.width, this.height);
-
         requestAnimationFrame(this.animate.bind(this));
+        //draw();
     }
+    
+    //Samuel
+    /*function draw() {
+        var img = new Image();
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0);
+      };
+      img.src = '/Image/Vaisseau';
+    }*/
 }
 
 //Gestion du clavier
 //https://hacks.mozilla.org/2017/03/internationalize-your-keyboard-controls/
+
 class Keyboard
 {
     constructor()
