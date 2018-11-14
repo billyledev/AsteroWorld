@@ -16,6 +16,4 @@ class Asteroid {
     this.posY = posY;
     this.SizeEnum = SizeEnum;
   }
-
-  
 }
