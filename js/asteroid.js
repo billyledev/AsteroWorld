@@ -1,5 +1,5 @@
 class Asteroid {
-	let posX,posY,vitesse;
+	let posX,posY,velX,velY;
 	var SizeEnum = {
 	  SMALL: 1,
 	  MEDIUM: 2,
@@ -11,9 +11,11 @@ class Asteroid {
 	  }
 	};
 
-  constructor(posX, posY, SizeEnum) {
+  constructor(posX, posY, velX, velY, SizeEnum) {
     this.posX = posX;
     this.posY = posY;
+    this.velX = velX;
+    this.velY = velY;
     this.SizeEnum = SizeEnum;
   }
 }

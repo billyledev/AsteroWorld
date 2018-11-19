@@ -36,8 +36,11 @@ class Game
         //draw();
     }
     createAsteroid(let n){
+        var astro = new Asteroid();
         for (let i=0;i<n;i++){
-            SizeEnum[Math.floor(Math.random())];
+            asto.posX = Math.random() * this.canvasHeight ;
+            asto.posY = Math.random() * this.canvasHeight ;
         }
     }
+    
 }
