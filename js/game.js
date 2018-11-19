@@ -1,5 +1,6 @@
 import { loadAssets } from './loader.js';
 import { Keyboard } from './keyboard.js';
+import { Asteroid} from './asteroid.js';
 
 let assetsToLoad = {
     // nomImage: { url: 'https://example.org/image.png' }
@@ -41,7 +42,7 @@ class Game
         this.ctx = this.canvas.getContext('2d');
 
         this.keyboard = new Keyboard();
-
+        this.createAsteroid(5);
         requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -58,11 +59,11 @@ class Game
     }
     createAsteroid(n){       
         for (let i=0;i<n;i++){
-            let posX = Math.random() * this.canvasHeight ;
-            let posY = Math.random() * this.canvasHeight ;
-            let veloX = (Math.random() * 10) - 5;
-            let veloY = (Math.random() * 10) - 5;
-            asteroids.push(new Asteroid(posX, posY, veloX, veloY, this.assets));
+            let posX = Math.random() * this.ctx.canvas.clientWidth ;
+            let posY = Math.random() * this.ctx.canvas.clientHeight ;
+            //let velo = (Math.random() * 10) - 5;
+            let velo =  5;
+            this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx));
         }
     }
     
