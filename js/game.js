@@ -1,15 +1,28 @@
+import { loadAssets } from './loader.js';
 import { Keyboard } from './keyboard.js';
+
+let assetsToLoad = {
+    // nomImage: { url: 'https://example.org/image.png' }
+};
 
 //Fonction appelée à la fin du chargement du DOM
 window.addEventListener('load', () => {
-    //On créé une nouvelle instance du jeu
-    let game = new Game();
-    game.init();
+    //On charge les ressources et on lance le jeu
+    loadAssets(assetsToLoad, assets => {
+        let game = new Game(assets);
+        game.init();
+    });
 });
 
 //Classe de gestion du jeu
 class Game
 {
+    constructor(assets)
+    {
+        //On récupère les ressources chargées au lancement
+        this.assets = assets;
+    }
+
     //Gère l'initialisation du jeu
     init()
     {
@@ -41,6 +54,8 @@ class Game
             asto.posX = Math.random() * this.canvasHeight ;
             asto.posY = Math.random() * this.canvasHeight ;
         }
+=======
+>>>>>>> master
     }
     
 }
