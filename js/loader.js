@@ -7,17 +7,24 @@ export function loadAssets(assetsToBeLoaded, callback)
     let loadedAssets = 0;
     let numberOfAssetsToLoad = Object.keys(assetsToBeLoaded).length;
 
-    for (let name in assetsToBeLoaded)
+    if (numberOfAssetsToLoad != 0)
     {
-        let url = assetsToBeLoaded[name].url;
+        for (let name in assetsToBeLoaded)
+        {
+            let url = assetsToBeLoaded[name].url;
 
-        assetsLoaded[name] = new Image();
-        assetsLoaded[name].addEventListener('load', () => {
-            if (++loadedAssets >= numberOfAssetsToLoad)
-            {
-                callback(assetsLoaded);
-            }
-        });
-        assetsLoaded[name].src = url;
+            assetsLoaded[name] = new Image();
+            assetsLoaded[name].addEventListener('load', () => {
+                if (++loadedAssets >= numberOfAssetsToLoad)
+                {
+                    callback(assetsLoaded);
+                }
+            });
+            assetsLoaded[name].src = url;
+        }
+    }
+    else
+    {
+        callback(assetsLoaded);
     }
 }
