@@ -1,6 +1,6 @@
 class Asteroid {
 
-  constructor(posX, posY, velX, velY, orientation, assets) {
+  constructor(posX, posY, velX, velY, assets) {
     this.posX = posX;
     this.posY = posY;
     this.orientation = Math.random();
