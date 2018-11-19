@@ -3,9 +3,9 @@ import { Keyboard } from './keyboard.js';
 
 let assetsToLoad = {
     // nomImage: { url: 'https://example.org/image.png' }
-    asteroidSmall: { url: '/image/AsteroidSolo_small.png' };
-    asteroidMedium: { url: '/image/AsteroidSolo_medium.png' };
-    asteroidLarge: { url: '/image/AsteroidSolo_large.png' };
+    asteroidSmall: { url: './js/image/AsteroidSolo_small.png' },
+    asteroidMedium: { url: './js/image/AsteroidSolo_medium.png' },
+    asteroidLarge: { url: './js/image/AsteroidSolo_large.png' }
 };
 
 //Fonction appelée à la fin du chargement du DOM
@@ -49,8 +49,8 @@ class Game
     animate()
     {
         this.ctx.clearRect(0, 0, this.width, this.height);
-        for(let i = 0; i<asteroids.length(); i++){
-            this.asteroids.draw();
+        for(let i = 0; i<this.asteroids.length; i++){
+            this.asteroids[i].draw();
         }
 
         requestAnimationFrame(this.animate.bind(this));
