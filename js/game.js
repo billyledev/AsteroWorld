@@ -1,5 +1,6 @@
 import { loadAssets } from './loader.js';
 import { Keyboard } from './keyboard.js';
+import { Menu } from './menu.js';
 
 let assetsToLoad = {
     // nomImage: { url: 'https://example.org/image.png' }
@@ -21,6 +22,9 @@ class Game
     {
         //On récupère les ressources chargées au lancement
         this.assets = assets;
+
+        //État du jeu (menu | game | scores)
+        this.state = 'menu';
     }
 
     //Gère l'initialisation du jeu
@@ -38,6 +42,8 @@ class Game
 
         this.keyboard = new Keyboard();
 
+        this.menu = new Menu(this.ctx, this.keyboard, state => { this.state = state});
+
         requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -45,6 +51,26 @@ class Game
     animate()
     {
         this.ctx.clearRect(0, 0, this.width, this.height);
+
+        switch (this.state)
+        {
+            case 'menu':
+            {
+                this.menu.draw();
+                break;
+            }
+
+            case 'jeu':
+            {
+                break;
+            }
+
+            case 'scores':
+            {
+                break;
+            }
+        }
+
         requestAnimationFrame(this.animate.bind(this));
     }
 }
