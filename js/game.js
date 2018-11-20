@@ -24,7 +24,7 @@ class Game
         this.keyboard = new Keyboard();
         
         this.vaisseau = new Vaisseau(100,100,0,this.ctx,this.keyboard);
-        this.tir = new Tir(100,150,this.ctx);
+        
         requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -33,7 +33,7 @@ class Game
     {
         this.ctx.clearRect(0, 0, this.width, this.height);
         this.vaisseau.draw();
-        this.tir.draw();
+        
         requestAnimationFrame(this.animate.bind(this));
         
     }
@@ -54,12 +54,15 @@ class Vaisseau{
     }
     
     draw(){
+        this.tirer();
         this.ctx.save();
+        this.avancer();
         this.ctx.rotate(this.orientation * Math.PI / 180);
-        this.ctx.drawImage(this.img, 0, 0);
-        this.ctx.translate(this.x,this.y);
+        this.ctx.drawImage(this.img, this.x, this.y);
+        this.ctx.translate(16,16);
         this.ctx.restore();
         this.tournerSurSoi();
+        
     }
     
     tournerSurSoi(){
@@ -70,7 +73,23 @@ class Vaisseau{
         if(this.keyboard.keys.left){
             this.orientation--;
         }
-        
+    }
+    
+    avancer(){
+        if(this.keyboard.keys.up){
+           this.x++;
+        }
+        if(this.keyboard.keys.down){
+            this.x--;
+        }
+    }
+    
+    tirer(){
+        if(this.keyboard.keys.up){
+           console.log("s");
+           this.tir = new Tir(this.x,this.y,this.ctx);
+           this.tir.draw();
+        }
     }
     
 }
