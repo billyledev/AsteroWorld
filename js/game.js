@@ -61,8 +61,7 @@ class Game
         for (let i=0;i<n;i++){
             let posX = Math.random() * this.ctx.canvas.clientWidth ;
             let posY = Math.random() * this.ctx.canvas.clientHeight ;
-            //let velo = (Math.random() * 10) - 5;
-            let velo =  5;
+            let velo =  2;
             this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx));
         }
     }
