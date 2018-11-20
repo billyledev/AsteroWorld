@@ -62,7 +62,7 @@ class Game
         this.ctx.clearRect(0, 0, this.width, this.height);
         for(let i = 0; i<this.asteroids.length; i++){
             this.asteroids[i].draw();
-
+        }
         switch (this.state)
         {
             case 'menu':
