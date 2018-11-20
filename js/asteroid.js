@@ -1,28 +1,42 @@
 export class Asteroid {
 
-  constructor(posX, posY, velo, assets, ctx) {
+  constructor(posX, posY, velo, assets, ctx, size) {
   	this.ctx = ctx;
   	this.assets = assets;
     this.posX = posX;
     this.posY = posY;
-    this.width = assets.asteroidMedium.width;
-    this.height = assets.asteroidMedium.height;
     this.calcOrientation();
     this.velo = velo;
     this.SizeEnum = {
-	  SMALL: 1,
-	  MEDIUM: 2,
-	  LARGE: 3,
-	  properties: {
-	    1: {name: "small", value: 1, width:15, height:14, img: assets.asteroidSmall},
-	    2: {name: "medium", value: 2, width:28, height:28, img: assets.asteroidMedium},
-	    3: {name: "large", value: 3, width:56, height:56, img: assets.asteroidLarge}
-	  }
-	}; 
+	  SMALL: {name: "small", value: 1, width:15, height:14, img: assets.asteroidSmall, score:15},
+	  MEDIUM: {name: "medium", value: 2, width:28, height:28, img: assets.asteroidMedium, score:10},
+	  LARGE: {name: "large", value: 3, width:56, height:56, img: assets.asteroidLarge, score:5}
+	   };
+    switch (size)
+    {
+      case this.SizeEnum.SMALL.name:
+      {
+        this.size = this.SizeEnum.SMALL;
+        break;
+      }
+      case this.SizeEnum.MEDIUM.name:
+      {
+        this.size = this.SizeEnum.MEDIUM;
+        break;
+      }
+      case this.SizeEnum.LARGE.name:
+      {
+        this.size = this.SizeEnum.LARGE;
+        break;
+      }
+    }
+    this.img = this.size.img;
+    this.width = this.size.width;
+    this.height = this.size.height; 
   }
   draw(){
   	this.move();
-  	this.ctx.drawImage(this.assets.asteroidMedium, this.posX, this.posY);
+  	this.ctx.drawImage(this.img, this.posX, this.posY);
   }
   move(){
   	this.posX += this.velo * Math.sin(this.orientation);
