@@ -28,6 +28,7 @@ class Game
         this.assets = assets;
         this.asteroids = [];
         this.wave= 1;
+        this.score = score;
 
         //État du jeu (menu | game | scores)
         this.state = 'menu';
@@ -100,12 +101,45 @@ class Game
             this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size));
         }
     }
+    createAsteroid2(n, size, posX, posY){   
+        for (let i=0;i<n * this.wave;i++){
+            let posX = Math.random() * this.ctx.canvas.clientWidth ;
+            let posY = Math.random() * this.ctx.canvas.clientHeight ;
+            let velo =  2;
+            this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size));
+        }
+    }
     checkWave(){
         if (this.asteroids.length == 0){
           this.wave+=1;
           this.createAsteroid(5,'large');
         }
-        setTimeout(this.checkWave, 1000);
+        setTimeout(this.checkWave.bind(this), 1000);
+    }
+
+    checkAsteroids(){
+        for(let i =0; i<this.asteroids.length;i++){
+            if(!this.asteroids[i].exist){
+                let posX = this.asteroids.posX;
+                let posY = this.asteroids.posY;
+                let size = this.asteroids.size;
+                this.asteroids.splice(i,1);
+                this.score += this.asteroids.size.score * wave;
+                switch (this.asteroids.size.name){
+                  case 'small':{
+                    break;
+                  }
+                  case 'medium':{
+                    createAsteroid2(2, 'small', posX, posY);
+                    break;
+                  }
+                  case 'large':{
+                    createAsteroid2(2, 'medium', posX, posY);
+                    break;
+                  }
+                }
+            }
+        }
     }
     
 }
