@@ -26,6 +26,7 @@ class Game
         //On récupère les ressources chargées au lancement
         this.assets = assets;
         this.asteroids = [];
+        this.wave= 1;
     }
 
     //Gère l'initialisation du jeu
@@ -42,7 +43,10 @@ class Game
         this.ctx = this.canvas.getContext('2d');
 
         this.keyboard = new Keyboard();
-        this.createAsteroid(5);
+
+        //Création de l'asteroid du début
+        this.createAsteroid(5,'large');
+        this.checkWave();
         requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -57,13 +61,20 @@ class Game
         requestAnimationFrame(this.animate.bind(this));
         //draw();
     }
-    createAsteroid(n){       
-        for (let i=0;i<n;i++){
+    createAsteroid(n, size){      
+        for (let i=0;i<n * this.wave;i++){
             let posX = Math.random() * this.ctx.canvas.clientWidth ;
             let posY = Math.random() * this.ctx.canvas.clientHeight ;
             let velo =  2;
-            this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, 'large'));
+            this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size));
         }
+    }
+    checkWave(){
+        if (this.asteroids.length == 0){
+          this.wave+=1;
+          this.createAsteroid(5,'large');
+        }
+        setTimeout(this.checkWave, 1000);
     }
     
 }

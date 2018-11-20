@@ -42,6 +42,7 @@ export class Asteroid {
   	this.posX += this.velo * Math.sin(this.orientation);
     this.posY -= this.velo * Math.cos(this.orientation);
 
+    //Change la direction pour ramener dans le canvas
     if(this.posX > this.ctx.canvas.clientWidth + this.width){
       this.posX = -(this.width);
       this.calcOrientation();
@@ -62,12 +63,10 @@ export class Asteroid {
 
 
   }
+  //Calcule l'angle 
   calcOrientation(){
     let dx = this.posX - (this.ctx.canvas.clientWidth / 2);
     let dy = this.posY - (this.ctx.canvas.clientHeight / 2);
     this.orientation = Math.atan2(dy,dx) -Math.PI/2;
-  }
-  explosion(){
-
   }
 }
