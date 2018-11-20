@@ -1,6 +1,7 @@
 import { loadAssets } from './loader.js';
 import { Keyboard } from './keyboard.js';
 import { Asteroid} from './asteroid.js';
+import { Menu } from './menu.js';
 
 let assetsToLoad = {
     // nomImage: { url: 'https://example.org/image.png' }
@@ -27,6 +28,9 @@ class Game
         this.assets = assets;
         this.asteroids = [];
         this.wave= 1;
+
+        //État du jeu (menu | game | scores)
+        this.state = 'menu';
     }
 
     //Gère l'initialisation du jeu
@@ -47,6 +51,8 @@ class Game
         //Création de l'asteroid du début
         this.createAsteroid(5,'large');
         this.checkWave();
+        this.menu = new Menu(this.ctx, this.keyboard, state => { this.state = state});
+
         requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -56,6 +62,24 @@ class Game
         this.ctx.clearRect(0, 0, this.width, this.height);
         for(let i = 0; i<this.asteroids.length; i++){
             this.asteroids[i].draw();
+
+        switch (this.state)
+        {
+            case 'menu':
+            {
+                this.menu.draw();
+                break;
+            }
+
+            case 'jeu':
+            {
+                break;
+            }
+
+            case 'scores':
+            {
+                break;
+            }
         }
 
         requestAnimationFrame(this.animate.bind(this));
