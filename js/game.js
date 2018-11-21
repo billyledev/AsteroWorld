@@ -31,9 +31,13 @@ class Game
         this.asteroids = [];
         this.wave= 1;
         this.score = 0;
+        this.bestScore= [];
+        this.end = false;
+        this.vie = 3;
 
         //État du jeu (menu | game | scores)
         this.state = 'menu';
+        this.checkWaveNb = 0;
     }
 
     //Gère l'initialisation du jeu
@@ -102,8 +106,6 @@ class Game
     }
     createAsteroid2(n, size, posX, posY){   
         for (let i=0;i<n * this.wave;i++){
-            let posX = Math.random() * this.ctx.canvas.clientWidth ;
-            let posY = Math.random() * this.ctx.canvas.clientHeight ;
             let velo =  2;
             this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size));
         }
@@ -113,6 +115,13 @@ class Game
           this.wave+=1;
           this.createAsteroid(5,'large');
         }
+        
+        if (this.checkWaveNb % 3 == 0)
+        {
+            this.createAsteroid(1 * this.wave,'large');
+        }
+
+        this.checkWaveNb++;
         setTimeout(this.checkWave.bind(this), 1000);
     }
 
@@ -138,6 +147,19 @@ class Game
                   }
                 }
             }
+        }
+    }
+
+    bestScore(){
+        if(this.end == true){
+            //ajouter le score au tableau
+            this.bestScore.push(this.score);
+            this.bestScore.sort();
+            if (this.bestScore.length > 10){
+                this.bestScore = this.bestScore.splice(10);
+            }
+            let bestscoreStr = JSON.stringify(this.bestScore);
+            localStorage.setItem('bestScore',bestscoreStr);
         }
     }
     
