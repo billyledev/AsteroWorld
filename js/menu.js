@@ -50,7 +50,7 @@ export class Menu
             {
                 case 0:
                 {
-                    this.changeState('game');
+                    this.changeState('jeu');
                     break;
                 }
 
