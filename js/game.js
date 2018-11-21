@@ -155,37 +155,42 @@ class Vaisseau{
         this.img.src = './js/Image/Vaisseau.png';
         this.width=this.img.width;
         this.height=this.img.height;
+        this.vitesse = 0;
     }
     
     draw(){
         this.tirer();
         this.ctx.save();
         this.avancer();
-        this.ctx.rotate(this.orientation * Math.PI / 180);
-        this.ctx.drawImage(this.img, this.x, this.y);
-        this.ctx.translate(16,16);
-        this.ctx.restore();
+        this.ctx.translate(this.x, this.y);
+        this.ctx.rotate(this.orientation+Math.PI/2);
+        this.ctx.translate(-16, -16);
+        this.ctx.drawImage(this.img, 0, 0);
+        //this.ctx.translate(16,16);
         this.tournerSurSoi();
-        
+        this.ctx.restore();
     }
     
     tournerSurSoi(){
         //console.log(this.keyboard.keys);
         if(this.keyboard.keys.right){
-           this.orientation++;
+           this.orientation+= 0.2;
         }
         if(this.keyboard.keys.left){
-            this.orientation--;
+            this.orientation-=0.2;
         }
     }
     
     avancer(){
         if(this.keyboard.keys.up){
-           this.x++;
+            this.vitesse = 2;
         }
         if(this.keyboard.keys.down){
-            this.x--;
+            this.vitesse = 0;
         }
+        
+        this.x+= this.vitesse*Math.cos(this.orientation);
+        this.y+= this.vitesse*Math.sin(this.orientation);
     }
     
     tirer(){
