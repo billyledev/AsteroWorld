@@ -28,7 +28,7 @@ class Game
         this.assets = assets;
         this.asteroids = [];
         this.wave= 1;
-        this.score = score;
+        this.score = 0;
 
         //État du jeu (menu | game | scores)
         this.state = 'menu';
