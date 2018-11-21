@@ -28,8 +28,16 @@ export class Vaisseau{
         for(let i = 0; i<this.tir.length; i++){
             if(this.tir != undefined){
                 this.tir[i].draw();
+                //Faut faire un split 
+                if (this.tir[i].x>this.ctx.canvas.clientWidth || this.tir[i].x<0 || this.tir[i].y>this.ctx.canvas.clientHeight || this.tir[i].y<0){
+                    this.tir.splice(i,1);
+                }
+                
             }
+        
         }
+        console.log(this.tir.length);
+        
             
     }
     
