@@ -77,6 +77,7 @@ class Game
 
             case 'jeu':
             {
+                this.vaisseau.draw();
                 break;
             }
 
@@ -85,12 +86,8 @@ class Game
                 break;
             }
         }
-
-        this.vaisseau.draw();
         
         requestAnimationFrame(this.animate.bind(this));
-        //draw();
-        
     }
 
     createAsteroid(n, size){   
