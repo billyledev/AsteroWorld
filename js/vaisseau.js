@@ -1,5 +1,6 @@
 import { Tir } from './tir.js';
 export class Vaisseau{
+    
     constructor(x,y,orientation,ctx,keyboard){
         this.x=x;
         this.y=y;
@@ -12,6 +13,7 @@ export class Vaisseau{
         this.width=this.img.width;
         this.height=this.img.height;
         this.vitesse = 0;
+        let timer=true;
     }
     
     draw(){
@@ -28,18 +30,14 @@ export class Vaisseau{
         for(let i = 0; i<this.tir.length; i++){
             if(this.tir != undefined){
                 this.tir[i].draw();
-                //Faut faire un split 
                 if (this.tir[i].x>this.ctx.canvas.clientWidth || this.tir[i].x<0 || this.tir[i].y>this.ctx.canvas.clientHeight || this.tir[i].y<0){
                     this.tir.splice(i,1);
-                }
-                
+                }   
             }
-        
         }
-        console.log(this.tir.length);
-        
-            
+        console.log(this.tir.length);            
     }
+    
     
     tournerSurSoi(){
         //console.log(this.keyboard.keys);
@@ -57,6 +55,22 @@ export class Vaisseau{
         }
         else{
             this.vitesse = 0;
+        }
+        if(this.x<0){
+            this.vitesse=0;
+            this.x=1;
+        }
+        if(this.x>640){
+            this.vitesse=0;
+            this.x=639;
+        }
+        if(this.y<0){
+            this.vitesse=0;
+            this.y=1;
+        }
+        if(this.y>480){
+            this.vitesse=0;
+            this.y=479;
         }
         
         
