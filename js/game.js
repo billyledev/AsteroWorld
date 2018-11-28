@@ -115,8 +115,7 @@ class Game
           this.wave+=1;
           this.createAsteroid(5,'large');
         }
-        
-        if (this.checkWaveNb % 3 == 0)
+        if (this.checkWaveNb % 3 == 0 && this.checkWaveNb <= 30)
         {
             this.createAsteroid(1 * this.wave,'large');
         }
