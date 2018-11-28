@@ -16,6 +16,7 @@ export class Vaisseau{
         let timer=true;
     }
     
+
     draw(){
         this.tirer();
         this.ctx.save();
@@ -73,7 +74,6 @@ export class Vaisseau{
             this.y=479;
         }
         
-        
         this.x+= this.vitesse*Math.cos(this.orientation);
         this.y+= this.vitesse*Math.sin(this.orientation);
     }
@@ -81,10 +81,16 @@ export class Vaisseau{
     tirer(){
         if(this.keyboard.keys.down){
            //console.log("tir");
+          // sleep(500).then(() => {
+      this.tir.push(new Tir(this.x,this.y+15,this.orientation,this.ctx));
+   // })
            
-           this.tir.push(new Tir(this.x,this.y+15,this.orientation,this.ctx));
             
         }
     }
     
+    /*const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds));
+    }   
+    */
 }
