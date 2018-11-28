@@ -5,7 +5,8 @@ export class Vaisseau{
         this.y=y;
         this.ctx=ctx;
         this.orientation=orientation;
-        this.keyboard=keyboard;        
+        this.keyboard=keyboard;       
+        this.tir = [];
         this.img = new Image();
         this.img.src = './js/Image/Vaisseau.png';
         this.width=this.img.width;
@@ -24,6 +25,20 @@ export class Vaisseau{
         //this.ctx.translate(16,16);
         this.tournerSurSoi();
         this.ctx.restore();
+        for(let i = 0; i<this.tir.length; i++){
+            if(this.tir != undefined){
+                this.tir[i].draw();
+                //Faut faire un split 
+                if (this.tir[i].x>this.ctx.canvas.clientWidth || this.tir[i].x<0 || this.tir[i].y>this.ctx.canvas.clientHeight || this.tir[i].y<0){
+                    this.tir.splice(i,1);
+                }
+                
+            }
+        
+        }
+        console.log(this.tir.length);
+        
+            
     }
     
     tournerSurSoi(){
@@ -52,8 +67,9 @@ export class Vaisseau{
     tirer(){
         if(this.keyboard.keys.down){
            //console.log("tir");
-           this.tir = new Tir(this.x,this.y,this.ctx);
-           this.tir.draw();
+           
+           this.tir.push(new Tir(this.x,this.y+15,this.orientation,this.ctx));
+            
         }
     }
     
