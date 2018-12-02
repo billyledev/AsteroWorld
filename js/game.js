@@ -4,6 +4,7 @@ import { Asteroid} from './asteroid.js';
 import { Menu } from './menu.js';
 import { Vaisseau } from './vaisseau.js';
 import { Tir } from './tir.js';
+import { ScoresScreen } from './scoresscreen.js';
 
 let assetsToLoad = {
     // nomImage: { url: 'https://example.org/image.png' }
@@ -38,6 +39,10 @@ class Game
         //État du jeu (menu | game | scores)
         this.state = 'menu';
         this.checkWaveNb = 0;
+        if (localStorage.getItem('highscores') == null)
+        {
+            localStorage.setItem('highscores', JSON.stringify([]));
+        }
     }
 
     //Gère l'initialisation du jeu
@@ -58,8 +63,9 @@ class Game
         //Création de l'asteroid du début
         this.createAsteroid(5,'large');
         this.checkWave();
-        this.menu = new Menu(this.ctx, this.keyboard, state => { this.state = state});
-
+        let changeState = state => { this.state = state};
+        this.menu = new Menu(this.ctx, this.keyboard, changeState);
+        this.scoresScreen = new ScoresScreen(this.ctx, this.keyboard, changeState);
         
         this.vaisseau = new Vaisseau(100,100,0,this.ctx,this.keyboard);
         
@@ -82,7 +88,7 @@ class Game
             case 'jeu':
             {
                 this.vaisseau.draw();
-                
+
                 for(let i = 0; i<this.asteroids.length; i++){
                     this.asteroids[i].draw();
                 }
@@ -92,6 +98,8 @@ class Game
 
             case 'scores':
             {
+                this.scoresScreen.refreshScores();
+                this.scoresScreen.draw();
                 break;
             }
         }
