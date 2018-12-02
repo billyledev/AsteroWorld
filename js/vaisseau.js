@@ -5,7 +5,8 @@ export class Vaisseau{
         this.x=x;
         this.y=y;
         this.ctx=ctx;
-        this.orientation=orientation;
+        this.orientationVaisseau = orientation;
+        this.orientationDeplacement=orientation;
         this.keyboard=keyboard;       
         this.tir = [];
         this.img = new Image();
@@ -22,7 +23,7 @@ export class Vaisseau{
         this.ctx.save();
         this.avancer();
         this.ctx.translate(this.x, this.y);
-        this.ctx.rotate(this.orientation+Math.PI/2);
+        this.ctx.rotate(this.orientationVaisseau+Math.PI/2);
         this.ctx.translate(-16, -16);
         this.ctx.drawImage(this.img, 0, 0);
         //this.ctx.translate(16,16);
@@ -43,19 +44,17 @@ export class Vaisseau{
     tournerSurSoi(){
         //console.log(this.keyboard.keys);
         if(this.keyboard.keys.right){
-           this.orientation+= 0.1;
+           this.orientationVaisseau+= 0.1;
         }
         if(this.keyboard.keys.left){
-            this.orientation-=0.1;
+            this.orientationVaisseau-=0.1;
         }
     }
     
     avancer(){
         if(this.keyboard.keys.up){
             this.vitesse = 2;
-        }
-        else{
-            this.vitesse = 0;
+            this.orientationDeplacement = this.orientationVaisseau;
         }
         if(this.x<0){
             this.vitesse=0;
@@ -74,15 +73,15 @@ export class Vaisseau{
             this.y=479;
         }
         
-        this.x+= this.vitesse*Math.cos(this.orientation);
-        this.y+= this.vitesse*Math.sin(this.orientation);
+        this.x+= this.vitesse*Math.cos(this.orientationDeplacement);
+        this.y+= this.vitesse*Math.sin(this.orientationDeplacement);
     }
     
     tirer(){
         if(this.keyboard.keys.down){
            //console.log("tir");
           // sleep(500).then(() => {
-      this.tir.push(new Tir(this.x,this.y+15,this.orientation,this.ctx));
+      this.tir.push(new Tir(this.x,this.y+15,this.orientationVaisseau,this.ctx));
    // })
            
             
