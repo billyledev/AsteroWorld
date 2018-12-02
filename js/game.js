@@ -70,9 +70,7 @@ class Game
     animate()
     {
         this.ctx.clearRect(0, 0, this.width, this.height);
-        for(let i = 0; i<this.asteroids.length; i++){
-            this.asteroids[i].draw();
-        }
+
         switch (this.state)
         {
             case 'menu':
@@ -84,6 +82,11 @@ class Game
             case 'jeu':
             {
                 this.vaisseau.draw();
+                
+                for(let i = 0; i<this.asteroids.length; i++){
+                    this.asteroids[i].draw();
+                }
+
                 break;
             }
 
