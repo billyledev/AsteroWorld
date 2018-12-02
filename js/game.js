@@ -88,7 +88,7 @@ class Game
                 break;
             }
         }
-        
+        this.collisionVaisseauAsteroide();
         requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -114,6 +114,22 @@ class Game
           this.createAsteroid(5,'large');
         }
         setTimeout(this.checkWave.bind(this), 1000);
+    }
+    
+    collisionVaisseauAsteroide(){
+        /*
+        console.log(this.vaisseau.x);
+        console.log('astero');
+        console.log());*/
+        var vaisseau=this.vaisseau;
+        this.asteroids.forEach(function(element) {
+            if(vaisseau.x < element.posX+26 && vaisseau.x > element.posX-26 && vaisseau.y < element.posY+26 && vaisseau.y > element.posY-26){
+                console.log("touché en x");
+            }
+            
+            //console.log(element.posX);
+            //console.log(vaisseau.x);
+        });
     }
 
     checkAsteroids(){
