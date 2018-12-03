@@ -14,6 +14,7 @@ export class Vaisseau{
         this.width=this.img.width;
         this.height=this.img.height;
         this.vitesse = 0;
+        this.peutTirer = true;
         let timer=true;
     }
     
@@ -26,7 +27,6 @@ export class Vaisseau{
         this.ctx.rotate(this.orientationVaisseau+Math.PI/2);
         this.ctx.translate(-16, -16);
         this.ctx.drawImage(this.img, 0, 0);
-        //this.ctx.translate(16,16);
         this.tournerSurSoi();
         this.ctx.restore();
         for(let i = 0; i<this.tir.length; i++){
@@ -37,7 +37,7 @@ export class Vaisseau{
                 }   
             }
         }
-        console.log(this.tir.length);            
+      //  console.log(this.tir.length);            
     }
     
     
@@ -78,13 +78,16 @@ export class Vaisseau{
     }
     
     tirer(){
-        if(this.keyboard.keys.down){
+        if(this.keyboard.keys.down && this.peutTirer){
            //console.log("tir");
           // sleep(500).then(() => {
       this.tir.push(new Tir(this.x,this.y+15,this.orientationVaisseau,this.ctx));
+      this.peutTirer = false;
+      setTimeout((() => {
+        this.peutTirer = true;
+      }).bind(this), 500);
    // })
-           
-            
+ 
         }
     }
     

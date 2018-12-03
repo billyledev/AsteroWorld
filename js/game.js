@@ -68,7 +68,7 @@ class Game
         this.scoresScreen = new ScoresScreen(this.ctx, this.keyboard, changeState);
         
         this.vaisseau = new Vaisseau(100,100,0,this.ctx,this.keyboard);
-        
+        this.checkAsteroids();
         requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -91,8 +91,7 @@ class Game
 
                 for(let i = 0; i<this.asteroids.length; i++){
                     this.asteroids[i].draw();
-                }
-
+                }   
                 break;
             }
 
@@ -137,27 +136,44 @@ class Game
 
     checkAsteroids(){
         for(let i =0; i<this.asteroids.length;i++){
-            if(!this.asteroids[i].exist){
-                let posX = this.asteroids.posX;
-                let posY = this.asteroids.posY;
-                let size = this.asteroids.size;
-                this.asteroids.splice(i,1);
-                this.score += this.asteroids.size.score * wave;
-                switch (this.asteroids.size.name){
-                  case 'small':{
-                    break;
-                  }
-                  case 'medium':{
-                    createAsteroid2(2, 'small', posX, posY);
-                    break;
-                  }
-                  case 'large':{
-                    createAsteroid2(2, 'medium', posX, posY);
-                    break;
-                  }
+            for (let z=0;z<this.vaisseau.tir.length;z++){
+               // console.log("x:" + this.vaisseau.tir[z].x + "y:" + this.vaisseau.tir[z].y);
+                if(this.asteroids[i].exist){
+                    if(this.vaisseau.tir[z].x < this.asteroids[i].posX + this.asteroids[i].size.width && this.vaisseau.tir[z].x > this.asteroids[i].posX - this.asteroids[i].size.width && this.vaisseau.tir[z].y < this.asteroids[i].posY + this.asteroids[i].size.height && this.vaisseau.tir[z].y > this.asteroids[i].posY - this.asteroids[i].size.height){
+                        let posX = this.asteroids[i].posX;
+                        let posY = this.asteroids[i].posY;
+                        let size = this.asteroids[i].size;
+                      //  this.asteroids.splice(i,1);
+                        this.vaisseau.tir.splice(z,1);
+                        this.score += this.asteroids[i].score * this.wave;
+                        switch (this.asteroids[i].size.name){
+                          case 'small':{
+                            break;
+                          }
+                          case 'medium':{
+                            this.createAsteroid2(2, 'small', posX, posY);
+                            break;
+                          }
+                          case 'large':{
+                            this.createAsteroid2(2, 'medium', posX, posY);
+                            break;
+                          }
+                        }
+                        this.asteroids[i].exist = false;
+                    }
+                    
                 }
             }
         }
+
+        for (let i = 0; i<this.asteroids.length;i++)
+        {
+            if (!this.asteroids[i].exist)
+            {
+                this.asteroids.splice(i,1);
+            }
+        }
+        setTimeout(this.checkAsteroids.bind(this), 50);
     }
 
     bestScore(){
