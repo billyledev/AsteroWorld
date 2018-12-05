@@ -1,16 +1,16 @@
 import { Tir } from './tir.js';
 export class Vaisseau{
     
-    constructor(x,y,orientation,ctx,keyboard){
+    constructor(x,y,orientation,ctx,keyboard,assets){
         this.x=x;
         this.y=y;
         this.ctx=ctx;
         this.orientationVaisseau = orientation;
         this.orientationDeplacement=orientation;
-        this.keyboard=keyboard;       
+        this.keyboard=keyboard; 
+        this.assets = assets;     
         this.tir = [];
-        this.img = new Image();
-        this.img.src = './js/Image/Vaisseau.png';
+        this.img = assets.vaisseau;
         this.width=this.img.width;
         this.height=this.img.height;
         this.vitesse = 0;
@@ -82,6 +82,7 @@ export class Vaisseau{
         if(this.keyboard.keys.down && this.peutTirer){
            //console.log("tir");
           // sleep(500).then(() => {
+            this.assets.fire.play();
       this.tir.push(new Tir(this.x,this.y+15,this.orientationVaisseau,this.ctx));
       this.peutTirer = false;
       setTimeout((() => {
