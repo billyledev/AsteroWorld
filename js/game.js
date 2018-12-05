@@ -35,6 +35,7 @@ class Game
         this.bestScore= [];
         this.end = false;
         this.vie = 3;
+        this.peutPerdreVie = true;
 
         //État du jeu (menu | game | scores)
         this.state = 'menu';
@@ -135,19 +136,21 @@ class Game
     }
     
     collisionVaisseauAsteroide(){
-        /*
-        console.log(this.vaisseau.x);
-        console.log('astero');
-        console.log());*/
+
         var vaisseau=this.vaisseau;
         this.asteroids.forEach(function(element) {
-            if(vaisseau.x < element.posX+26 && vaisseau.x > element.posX-26 && vaisseau.y < element.posY+26 && vaisseau.y > element.posY-26){
-                console.log("touché en x");
+            if(vaisseau.x < element.posX+element.width && vaisseau.x > element.posX-element.width && vaisseau.y < element.posY+element.height && vaisseau.y > element.posY-element.height && this.peutPerdreVie){
+                this.vie--;
+                this.peutPerdreVie = false;
+                if(this.vie <=0){
+                    this.state = "menu";
+                }
+                setTimeout((() => {
+                    this.peutPerdreVie = true;      
+                }).bind(this),2000);
             }
-            
-            //console.log(element.posX);
-            //console.log(vaisseau.x);
-        });
+        
+        }.bind(this));
     }
 
     checkAsteroids(){
