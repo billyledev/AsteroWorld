@@ -93,6 +93,7 @@ class Game
                 for(let i = 0; i<this.asteroids.length; i++){
                     this.asteroids[i].draw();
                 }   
+                this.collisionVaisseauAsteroide();
                 break;
             }
 
@@ -125,7 +126,7 @@ class Game
                 break;
             }
         }
-        this.collisionVaisseauAsteroide();
+        
         requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -160,6 +161,7 @@ class Game
     collisionVaisseauAsteroide(){
 
         var vaisseau=this.vaisseau;
+        document.getElementById("vie").innerHTML=this.vie;
         this.asteroids.forEach(function(element) {
             if(vaisseau.x < element.posX+element.width && vaisseau.x > element.posX-element.width && vaisseau.y < element.posY+element.height && vaisseau.y > element.posY-element.height && this.peutPerdreVie){
                 this.vie--;
@@ -187,6 +189,7 @@ class Game
                       //  this.asteroids.splice(i,1);
                         this.vaisseau.tir.splice(z,1);
                         this.score += this.asteroids[i].score * this.wave;
+                        document.getElementById("score").innerHTML=this.score;
                         switch (this.asteroids[i].size.name){
                           case 'small':{
                             break;
