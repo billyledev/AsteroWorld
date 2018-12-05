@@ -10,8 +10,18 @@ let assetsToLoad = {
     // nomImage: { url: 'https://example.org/image.png' }
     asteroidSmall: { url: './js/image/AsteroidSolo_small.png' },
     asteroidMedium: { url: './js/image/AsteroidSolo_medium.png' },
-    asteroidLarge: { url: './js/image/AsteroidSolo_large.png' }
+    asteroidLarge: { url: './js/image/AsteroidSolo_large.png' },
+    vaisseau: { url: './js/Image/Vaisseau.png' },
+    //Ajoute tous les sons
+   // thrust: {url:'../sound/thrust.wav', buffer:false, loop:false, volume:0.9},
+   // fire: {url:'../sound/fire.wav'},
+    //bangSmall: {url:'../sound/bangSmall.wav', buffer:false, loop:false, volume:0.9},
+    //bangMedium: {url:'../sound/bangMedium.wav', buffer:false, loop:false, volume:0.9},
+    //bangLarge: {url:'../sound/bangLarge.wav', buffer:false, loop:false, volume:0.9}
+
 };
+
+
 
 //Fonction appelée à la fin du chargement du DOM
 window.addEventListener('load', () => {
@@ -67,7 +77,7 @@ class Game
         this.menu = new Menu(this.ctx, this.keyboard, changeState);
         this.scoresScreen = new ScoresScreen(this.ctx, this.keyboard, changeState);
         
-        this.vaisseau = new Vaisseau(100,100,0,this.ctx,this.keyboard);
+        this.vaisseau = new Vaisseau(100,100,0,this.ctx,this.keyboard,this.assets);
         this.checkAsteroids();
         requestAnimationFrame(this.animate.bind(this));
     }
@@ -164,13 +174,16 @@ class Game
                         this.score += this.asteroids[i].score * this.wave;
                         switch (this.asteroids[i].size.name){
                           case 'small':{
+                            this.assets.bangSmall.play();
                             break;
                           }
                           case 'medium':{
+                            this.assets.bangMedium.play();
                             this.createAsteroid2(2, 'small', posX, posY);
                             break;
                           }
                           case 'large':{
+                            this.assets.bangLarge.play();
                             this.createAsteroid2(2, 'medium', posX, posY);
                             break;
                           }
