@@ -32,7 +32,7 @@ export function loadAssets(assetsToBeLoaded, callback)
             else
             {
                 assetsLoaded[name] = new Howl({
-                    urls: [url],
+                    src: [url],
                     buffer: assetsToBeLoaded[name].buffer,
                     loop: assetsToBeLoaded[name].loop,
                     autoplay: false,

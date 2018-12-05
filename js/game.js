@@ -13,11 +13,11 @@ let assetsToLoad = {
     asteroidLarge: { url: './js/image/AsteroidSolo_large.png' },
     vaisseau: { url: './js/Image/Vaisseau.png' },
     //Ajoute tous les sons
-   // thrust: {url:'../sound/thrust.wav', buffer:false, loop:false, volume:0.9},
-   // fire: {url:'../sound/fire.wav'},
-    //bangSmall: {url:'../sound/bangSmall.wav', buffer:false, loop:false, volume:0.9},
-    //bangMedium: {url:'../sound/bangMedium.wav', buffer:false, loop:false, volume:0.9},
-    //bangLarge: {url:'../sound/bangLarge.wav', buffer:false, loop:false, volume:0.9}
+    thrust: {url:'../sound/thrust.wav', buffer:false, loop:false, volume:0.9},
+    fire: {url:'../sound/fire.wav', buffer:false, loop:false, volume:0.9},
+    bangSmall: {url:'../sound/bangSmall.wav', buffer:false, loop:false, volume:0.9},
+    bangMedium: {url:'../sound/bangMedium.wav', buffer:false, loop:false, volume:0.9},
+    bangLarge: {url:'../sound/bangLarge.wav', buffer:false, loop:false, volume:0.9}
 
 };
 
