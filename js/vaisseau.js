@@ -75,6 +75,7 @@ export class Vaisseau{
         
         this.x+= this.vitesse*Math.cos(this.orientationDeplacement);
         this.y+= this.vitesse*Math.sin(this.orientationDeplacement);
+        
     }
     
     tirer(){
