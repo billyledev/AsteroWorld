@@ -107,7 +107,7 @@ class Game
                 this.ctx.save();
 
                 this.ctx.fillStyle = '#000000';
-                this.ctx.fillRect(0,0,this.ctx.canvas.clientHeight,this.ctx.canvas.clientHeight);
+                this.ctx.fillRect(0,0,this.ctx.canvas.clientWidth,this.ctx.canvas.clientHeight);
 
                 this.ctx.fillStyle = '#FFFFFF';
                 this.ctx.font = '34px Verdana';
@@ -116,6 +116,10 @@ class Game
 
                 this.ctx.font = '26px Verdana';
                 this.ctx.fillText("Vous etes mort", this.width / 2, 250 + 60);
+                
+               
+                this.ctx.fillText("Votre score est", this.width / 4, 300 + 60);
+                this.ctx.fillText(this.score, this.width / 2, 300 + 60);
 
                 this.ctx.restore();
                 break;
