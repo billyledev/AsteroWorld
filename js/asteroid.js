@@ -32,7 +32,9 @@ export class Asteroid {
     }
     this.img = this.size.img;
     this.width = this.size.width;
-    this.height = this.size.height; 
+    this.height = this.size.height;
+    this.score = this.size.score;
+    this.exist = true;
   }
   draw(){
   	this.move();
