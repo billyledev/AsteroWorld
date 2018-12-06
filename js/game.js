@@ -200,6 +200,9 @@ class Game
                     scores.sort((a, b) => {
                         return b - a;
                     });
+                    if (scores.length > 10){
+                        scores.splice(10);
+                    }
                     localStorage.setItem('highscores', JSON.stringify(scores));
                 }
                 setTimeout((() => {
@@ -265,21 +268,4 @@ class Game
         }
         setTimeout(this.checkAsteroids.bind(this), 50);
     }
-
-    bestScore(){
-        if(this.end == true){
-            //ajouter le score au tableau
-            this.bestScore.push(this.score);
-            this.bestScore.sort();
-            if (this.bestScore.length > 10){
-                this.bestScore = this.bestScore.splice(10);
-            }
-            let bestscoreStr = JSON.stringify(this.bestScore);
-            localStorage.setItem('bestScore',bestscoreStr);
-        }
-    }
-    
 }
-
-
-
