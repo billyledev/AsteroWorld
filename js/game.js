@@ -18,8 +18,8 @@ let assetsToLoad = {
     bangSmall: {url:'../sound/bangSmall.wav', buffer:false, loop:false, volume:0.9},
     bangMedium: {url:'../sound/bangMedium.wav', buffer:false, loop:false, volume:0.9},
     bangLarge: {url:'../sound/bangLarge.wav', buffer:false, loop:false, volume:0.9},
-    //ajout des musiques du jeu
-   // track1: {url:'../sound/travis-scott-5-tint-audio.mp3', buffer:false, loop:false, volume:0.2},
+    //ajout de la musique du jeu
+    track1: {url:'../sound/disfigure-blank-ncs-release.mp3', buffer:false, loop:true, volume:0.2},
     
 };
 
@@ -47,7 +47,7 @@ class Game
         this.bestScore= [];
         this.end = false;
         this.vie = 3;
-        this.peutPerdreVie = true;
+        this.peutPerdreVie = false;
 
         //État du jeu (menu | game | scores)
         this.state = 'menu';
@@ -73,14 +73,18 @@ class Game
 
         this.keyboard = new Keyboard();
 
+        this.vaisseau = new Vaisseau(this.ctx.canvas.clientWidth/2,this.ctx.canvas.clientHeight/2,0,this.ctx,this.keyboard,this.assets);
+
         //Création de l'asteroid du début
-        this.createAsteroid(5,'large');
+        this.createAsteroid(2,'large');
         this.checkWave();
         let changeState = state => { this.state = state};
         this.menu = new Menu(this.ctx, this.keyboard, changeState);
         this.scoresScreen = new ScoresScreen(this.ctx, this.keyboard, changeState);
-        
-        this.vaisseau = new Vaisseau(this.width/2,this.height/2,0,this.ctx,this.keyboard,this.assets);
+        this.assets.track1.play();
+        setTimeout((() => {
+                    this.peutPerdreVie = true;      
+                }).bind(this),2000);
         this.checkAsteroids();
         requestAnimationFrame(this.animate.bind(this));
     }
@@ -89,7 +93,6 @@ class Game
     animate()
     {
         this.ctx.clearRect(0, 0, this.width, this.height);
-
         switch (this.state)
         {
             case 'menu':
@@ -135,7 +138,11 @@ class Game
                 this.ctx.fillText(this.score, this.width / 2, 300 + 60);
 
                 this.ctx.restore();
-                break;
+                
+                setTimeout((() => {
+                    this.state='menu';  
+                }).bind(this),10000);
+                break;  
             }
         }
         
