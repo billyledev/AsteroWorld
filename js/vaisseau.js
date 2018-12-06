@@ -51,8 +51,18 @@ export class Vaisseau{
     
     avancer(){
         if(this.keyboard.keys.up){
-            this.vitesse = 2;
+            if (this.vitesse < 3)
+            {
+                this.vitesse += 0.08;
+            }
             this.orientationDeplacement = this.orientationVaisseau;
+        }
+        else
+        {
+            if (this.vitesse > 0)
+            {
+                this.vitesse -= 0.02;
+            }
         }
         if(this.x<0){
             this.vitesse=0;
