@@ -193,8 +193,13 @@ class Game
                 this.peutPerdreVie = false;
                 vaisseau.x=this.width/2;
                 vaisseau.y=this.height/2;
-                if(this.vie <=0){
+                if(this.vie <= 0){
                     this.state = "mort";
+                    let scores = localStorage.getItem('highscores');
+                    scores.push(this.score);
+                    scores.sort();
+                    scores.reverse();
+                    localStorage.setItem('highscores', JSON.stringify(scores));
                 }
                 setTimeout((() => {
                     this.peutPerdreVie = true;      
