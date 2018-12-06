@@ -38,13 +38,9 @@ export class ScoresScreen
         this.ctx.fillText('High Scores', this.width / 2, 100);
 
         this.ctx.font = '18px Verdana';
-        this.ctx.textAlign = 'left';
         for (let i = 0; i < this.highscores.length; i++)
         {
-            this.ctx.textAlign = 'left';
-            this.ctx.fillText(this.highscores[i][0], this.width / 4, 200 + 26 * i);
-            this.ctx.textAlign = 'right';
-            this.ctx.fillText(this.highscores[i][1], this.width/4*3, 200 + 26 * i);
+            this.ctx.fillText(this.highscores[i], this.width / 2, 200 + 26 * i);
         }
 
         this.ctx.restore();
