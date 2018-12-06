@@ -175,7 +175,20 @@ class Game
         var vaisseau=this.vaisseau;
         document.getElementById("vie").innerHTML=this.vie;
         this.asteroids.forEach(function(element) {
-            if(vaisseau.x < element.posX+element.width && vaisseau.x > element.posX-element.width && vaisseau.y < element.posY+element.height && vaisseau.y > element.posY-element.height && this.peutPerdreVie){
+
+            if((vaisseau.x - vaisseau.width/2 > element.posX && vaisseau.x - vaisseau.width/2 < element.posX + element.width &&
+                vaisseau.y - vaisseau.height/2 > element.posY && vaisseau.y - vaisseau.height/2 < element.posY + element.height || //Point haut gauche
+                
+                vaisseau.x + vaisseau.width/2 > element.posX && vaisseau.x + vaisseau.width/2 < element.posX + element.width &&
+                vaisseau.y + vaisseau.height/2 > element.posY && vaisseau.y + vaisseau.height/2 < element.posY + element.height || //Point bas droite
+                
+                vaisseau.x + vaisseau.width/2 > element.posX && vaisseau.x + vaisseau.width/2 < element.posX + element.width &&
+                vaisseau.y - vaisseau.height/2 > element.posY && vaisseau.y - vaisseau.height/2 < element.posY + element.height || //Point haut droite
+                
+                vaisseau.x - vaisseau.width/2 > element.posX && vaisseau.x - vaisseau.width/2 < element.posX + element.width &&
+                vaisseau.y + vaisseau.height/2 > element.posY && vaisseau.y + vaisseau.height/2 < element.posY + element.height) && //Point bas gauche
+                this.peutPerdreVie)
+            {
                 this.vie--;
                 this.peutPerdreVie = false;
                 vaisseau.x=this.width/2;
@@ -187,7 +200,19 @@ class Game
                     this.peutPerdreVie = true;      
                 }).bind(this),2000);
             }
-        
+
+            if (this.debug)
+            {
+                this.ctx.beginPath();
+                this.ctx.fillStyle = '#FF0000';
+                this.ctx.arc(vaisseau.x, vaisseau.y, 5, 0, 2*Math.PI, false);
+                this.ctx.fill();
+                this.ctx.strokeStyle = '#0000FF';
+                this.ctx.strokeRect(vaisseau.x - vaisseau.width/2, vaisseau.y - vaisseau.width/2,
+                    vaisseau.width, vaisseau.height);
+                this.ctx.strokeStyle = '#00FF00';
+                this.ctx.strokeRect(element.posX, element.posY, element.width, element.height);
+            }
         }.bind(this));
     }
 
