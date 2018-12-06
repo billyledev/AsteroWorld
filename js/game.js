@@ -195,10 +195,11 @@ class Game
                 vaisseau.y=this.height/2;
                 if(this.vie <= 0){
                     this.state = "mort";
-                    let scores = localStorage.getItem('highscores');
+                    let scores = JSON.parse(localStorage.getItem('highscores'));
                     scores.push(this.score);
-                    scores.sort();
-                    scores.reverse();
+                    scores.sort((a, b) => {
+                        return b - a;
+                    });
                     localStorage.setItem('highscores', JSON.stringify(scores));
                 }
                 setTimeout((() => {
