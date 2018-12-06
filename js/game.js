@@ -17,8 +17,10 @@ let assetsToLoad = {
     fire: {url:'../sound/fire.wav', buffer:false, loop:false, volume:0.9},
     bangSmall: {url:'../sound/bangSmall.wav', buffer:false, loop:false, volume:0.9},
     bangMedium: {url:'../sound/bangMedium.wav', buffer:false, loop:false, volume:0.9},
-    bangLarge: {url:'../sound/bangLarge.wav', buffer:false, loop:false, volume:0.9}
-
+    bangLarge: {url:'../sound/bangLarge.wav', buffer:false, loop:false, volume:0.9},
+    //ajout des musiques du jeu
+   // track1: {url:'../sound/travis-scott-5-tint-audio.mp3', buffer:false, loop:false, volume:0.2},
+    
 };
 
 
@@ -78,7 +80,7 @@ class Game
         this.menu = new Menu(this.ctx, this.keyboard, changeState);
         this.scoresScreen = new ScoresScreen(this.ctx, this.keyboard, changeState);
         
-        this.vaisseau = new Vaisseau(100,100,0,this.ctx,this.keyboard,this.assets);
+        this.vaisseau = new Vaisseau(this.width/2,this.height/2,0,this.ctx,this.keyboard,this.assets);
         this.checkAsteroids();
         requestAnimationFrame(this.animate.bind(this));
     }
@@ -176,6 +178,8 @@ class Game
             if(vaisseau.x < element.posX+element.width && vaisseau.x > element.posX-element.width && vaisseau.y < element.posY+element.height && vaisseau.y > element.posY-element.height && this.peutPerdreVie){
                 this.vie--;
                 this.peutPerdreVie = false;
+                vaisseau.x=this.width/2;
+                vaisseau.y=this.height/2;
                 if(this.vie <=0){
                     this.state = "mort";
                 }
@@ -190,13 +194,11 @@ class Game
     checkAsteroids(){
         for(let i =0; i<this.asteroids.length;i++){
             for (let z=0;z<this.vaisseau.tir.length;z++){
-               // console.log("x:" + this.vaisseau.tir[z].x + "y:" + this.vaisseau.tir[z].y);
                 if(this.asteroids[i].exist){
                     if(this.vaisseau.tir[z].x < this.asteroids[i].posX + this.asteroids[i].size.width && this.vaisseau.tir[z].x > this.asteroids[i].posX - this.asteroids[i].size.width && this.vaisseau.tir[z].y < this.asteroids[i].posY + this.asteroids[i].size.height && this.vaisseau.tir[z].y > this.asteroids[i].posY - this.asteroids[i].size.height){
                         let posX = this.asteroids[i].posX;
                         let posY = this.asteroids[i].posY;
                         let size = this.asteroids[i].size;
-                      //  this.asteroids.splice(i,1);
                         this.vaisseau.tir.splice(z,1);
                         this.score += this.asteroids[i].score * this.wave;
                         document.getElementById("score").innerHTML=this.score;

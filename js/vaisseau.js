@@ -36,13 +36,11 @@ export class Vaisseau{
                     this.tir.splice(i,1);
                 }   
             }
-        }
-      //  console.log(this.tir.length);            
+        }           
     }
     
     
     tournerSurSoi(){
-        //console.log(this.keyboard.keys);
         if(this.keyboard.keys.right){
            this.orientationVaisseau+= 0.1;
         }
@@ -80,21 +78,12 @@ export class Vaisseau{
     
     tirer(){
         if(this.keyboard.keys.down && this.peutTirer){
-           //console.log("tir");
-          // sleep(500).then(() => {
             this.assets.fire.play();
-      this.tir.push(new Tir(this.x,this.y+15,this.orientationVaisseau,this.ctx));
-      this.peutTirer = false;
-      setTimeout((() => {
-        this.peutTirer = true;
-      }).bind(this), 500);
-   // })
- 
+            this.tir.push(new Tir(this.x,this.y+15,this.orientationVaisseau,this.ctx));
+            this.peutTirer = false;
+            setTimeout((() => {
+                this.peutTirer = true;
+            }).bind(this), 500);
         }
     }
-    
-    /*const sleep = (milliseconds) => {
-        return new Promise(resolve => setTimeout(resolve, milliseconds));
-    }   
-    */
 }
