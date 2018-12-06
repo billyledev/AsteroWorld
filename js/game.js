@@ -144,8 +144,30 @@ class Game
 
     createAsteroid(n, size){   
         for (let i=0;i<n * this.wave;i++){
-            let posX = Math.random() * this.ctx.canvas.clientWidth ;
-            let posY = Math.random() * this.ctx.canvas.clientHeight ;
+            let posX, posY;
+
+            let randomPos = Math.floor(Math.random()*2);
+            if (randomPos == 0)
+            {
+                posX = - Math.random() * 200 ;
+                posY = Math.random() * this.ctx.canvas.clientHeight ;
+            }
+            else if (randomPos == 1)
+            {
+                posX = Math.random() * 200 + this.ctx.canvas.clientWidth ;
+                posY = - Math.random() * this.ctx.canvas.clientHeight ;
+            }
+            else if (randomPos == 2)
+            {
+                posX = Math.random() * this.ctx.canvas.clientWidth ;
+                posY = - Math.random() * 200;
+            }
+            else
+            {
+                posX = Math.random() * this.ctx.canvas.clientWidth ;
+                posY = - Math.random() * 200 + this.ctx.canvas.clientHeight ;
+            }
+
             let velo =  2;
             this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size));
         }
