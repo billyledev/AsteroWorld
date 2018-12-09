@@ -10,7 +10,7 @@ export class Vaisseau{
         this.keyboard=keyboard;       
         this.tir = [];
         this.img = new Image();
-        this.img.src = './js/Image/Vaisseau.png';
+        this.img.src = './js/Image/Vaisseau5.png';
         this.width=this.img.width;
         this.height=this.img.height;
         this.vitesse = 0;
