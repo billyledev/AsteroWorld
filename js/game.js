@@ -68,7 +68,7 @@ class Game
         this.menu = new Menu(this.ctx, this.keyboard, changeState);
         this.scoresScreen = new ScoresScreen(this.ctx, this.keyboard, changeState);
         
-        this.vaisseau = new Vaisseau(100,100,0,this.ctx,this.keyboard);
+        this.vaisseau = new Vaisseau(100,100,0,this.ctx,this.keyboard,this);
         this.checkAsteroids();
         requestAnimationFrame(this.animate.bind(this));
     }
@@ -175,6 +175,7 @@ class Game
             }
         
         }.bind(this));
+        
     }
 
     checkAsteroids(){
