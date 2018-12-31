@@ -1,7 +1,13 @@
 import { Tir } from './tir.js';
+
+
 export class Vaisseau{
     
+<<<<<<< HEAD
     constructor(x,y,orientation,ctx,keyboard,assets){
+=======
+    constructor(x,y,orientation,ctx,keyboard,game){
+>>>>>>> Samuel
         this.x=x;
         this.y=y;
         this.ctx=ctx;
@@ -10,10 +16,18 @@ export class Vaisseau{
         this.keyboard=keyboard; 
         this.assets = assets;     
         this.tir = [];
+<<<<<<< HEAD
         this.img = assets.vaisseau;
+=======
+        this.img = new Image();
+        this.img.src = './js/Image/Vaisseau5.png';
+>>>>>>> Samuel
         this.width=this.img.width;
         this.height=this.img.height;
         this.vitesse = 0;
+        this.game = game;
+        console.log(this.game.vie);
+        
         this.peutTirer = true;
         let timer=true;
     }
@@ -26,6 +40,18 @@ export class Vaisseau{
         this.ctx.translate(this.x, this.y);
         this.ctx.rotate(this.orientationVaisseau+Math.PI/2);
         this.ctx.translate(-16, -16);
+        
+        if(this.game.vie==3){
+            this.img.src = './js/Image/Vaisseau5.png';
+            console.log("a");
+        }
+        if(this.game.vie==2){
+            this.img.src = './js/Image/Vaisseau5_2.png';
+        }
+        if(this.game.vie==1){
+            this.img.src = './js/Image/Vaisseau5_3.png';
+        }
+        console.log(this.game.vie);
         this.ctx.drawImage(this.img, 0, 0);
         this.tournerSurSoi();
         this.ctx.restore();
