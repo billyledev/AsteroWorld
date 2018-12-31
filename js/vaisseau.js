@@ -3,11 +3,9 @@ import { Tir } from './tir.js';
 
 export class Vaisseau{
     
-<<<<<<< HEAD
+
     constructor(x,y,orientation,ctx,keyboard,assets){
-=======
-    constructor(x,y,orientation,ctx,keyboard,game){
->>>>>>> Samuel
+
         this.x=x;
         this.y=y;
         this.ctx=ctx;
@@ -16,12 +14,12 @@ export class Vaisseau{
         this.keyboard=keyboard; 
         this.assets = assets;     
         this.tir = [];
-<<<<<<< HEAD
+
         this.img = assets.vaisseau;
-=======
+
         this.img = new Image();
         this.img.src = './js/Image/Vaisseau5.png';
->>>>>>> Samuel
+
         this.width=this.img.width;
         this.height=this.img.height;
         this.vitesse = 0;
