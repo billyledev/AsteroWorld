@@ -81,10 +81,15 @@ class Game
         let changeState = state => { this.state = state};
         this.menu = new Menu(this.ctx, this.keyboard, changeState);
         this.scoresScreen = new ScoresScreen(this.ctx, this.keyboard, changeState);
+
         this.assets.track1.play();
         setTimeout((() => {
                     this.peutPerdreVie = true;      
                 }).bind(this),2000);
+
+        
+        this.vaisseau = new Vaisseau(100,100,0,this.ctx,this.keyboard,this);
+
         this.checkAsteroids();
         requestAnimationFrame(this.animate.bind(this));
     }
@@ -252,6 +257,7 @@ class Game
                 this.ctx.strokeRect(element.posX, element.posY, element.width, element.height);
             }
         }.bind(this));
+        
     }
 
     checkAsteroids(){
