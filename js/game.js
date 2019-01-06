@@ -15,13 +15,13 @@ let assetsToLoad = {
     vaisseau52: { url: './js/Image/Vaisseau5_2.png' },
     vaisseau53: { url: './js/Image/Vaisseau5_3.png' },
     //Ajoute tous les sons
-    thrust: {url:'../sound/thrust.wav', buffer:false, loop:false, volume:0.9},
-    fire: {url:'../sound/fire.wav', buffer:false, loop:false, volume:0.9},
-    bangSmall: {url:'../sound/bangSmall.wav', buffer:false, loop:false, volume:0.9},
-    bangMedium: {url:'../sound/bangMedium.wav', buffer:false, loop:false, volume:0.9},
-    bangLarge: {url:'../sound/bangLarge.wav', buffer:false, loop:false, volume:0.9},
+    thrust: {url:'./sound/thrust.wav', buffer:false, loop:false, volume:0.9},
+    fire: {url:'./sound/fire.wav', buffer:false, loop:false, volume:0.9},
+    bangSmall: {url:'./sound/bangSmall.wav', buffer:false, loop:false, volume:0.9},
+    bangMedium: {url:'./sound/bangMedium.wav', buffer:false, loop:false, volume:0.9},
+    bangLarge: {url:'./sound/bangLarge.wav', buffer:false, loop:false, volume:0.9},
     //ajout de la musique du jeu
-    track1: {url:'../sound/disfigure-blank-ncs-release.mp3', buffer:false, loop:true, volume:0.2},
+    track1: {url:'./sound/disfigure-blank-ncs-release.mp3', buffer:false, loop:true, volume:0.2},
     
 };
 
