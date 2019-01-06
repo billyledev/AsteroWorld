@@ -3,21 +3,24 @@ import { Tir } from './tir.js';
 
 export class Vaisseau{
     
-    constructor(x,y,orientation,ctx,keyboard,game){
+
+    constructor(x,y,orientation,ctx,keyboard,assets,game){
+
         this.x=x;
         this.y=y;
         this.ctx=ctx;
         this.orientationVaisseau = orientation;
         this.orientationDeplacement=orientation;
-        this.keyboard=keyboard;       
+        this.keyboard=keyboard; 
+        this.assets = assets;     
         this.tir = [];
-        this.img = new Image();
-        this.img.src = './js/Image/Vaisseau5.png';
-        this.width=this.img.width;
-        this.height=this.img.height;
+
+        this.img = assets.vaisseau5;
+
+        this.width=32;
+        this.height=32;
         this.vitesse = 0;
         this.game = game;
-        console.log(this.game.vie);
         
         this.peutTirer = true;
         let timer=true;
@@ -33,16 +36,14 @@ export class Vaisseau{
         this.ctx.translate(-16, -16);
         
         if(this.game.vie==3){
-            this.img.src = './js/Image/Vaisseau5.png';
-            console.log("a");
+            this.img = this.assets.vaisseau5;
         }
         if(this.game.vie==2){
-            this.img.src = './js/Image/Vaisseau5_2.png';
+            this.img = this.assets.vaisseau52;
         }
         if(this.game.vie==1){
-            this.img.src = './js/Image/Vaisseau5_3.png';
+            this.img = this.assets.vaisseau53;
         }
-        console.log(this.game.vie);
         this.ctx.drawImage(this.img, 0, 0);
         this.tournerSurSoi();
         this.ctx.restore();
@@ -53,13 +54,11 @@ export class Vaisseau{
                     this.tir.splice(i,1);
                 }   
             }
-        }
-      //  console.log(this.tir.length);            
+        }           
     }
     
     
     tournerSurSoi(){
-        //console.log(this.keyboard.keys);
         if(this.keyboard.keys.right){
            this.orientationVaisseau+= 0.1;
         }
@@ -70,8 +69,18 @@ export class Vaisseau{
     
     avancer(){
         if(this.keyboard.keys.up){
-            this.vitesse = 2;
+            if (this.vitesse < 3)
+            {
+                this.vitesse += 0.08;
+            }
             this.orientationDeplacement = this.orientationVaisseau;
+        }
+        else
+        {
+            if (this.vitesse > 0)
+            {
+                this.vitesse -= 0.02;
+            }
         }
         if(this.x<0){
             this.vitesse=0;
@@ -97,20 +106,12 @@ export class Vaisseau{
     
     tirer(){
         if(this.keyboard.keys.down && this.peutTirer){
-           //console.log("tir");
-          // sleep(500).then(() => {
-      this.tir.push(new Tir(this.x,this.y+15,this.orientationVaisseau,this.ctx));
-      this.peutTirer = false;
-      setTimeout((() => {
-        this.peutTirer = true;
-      }).bind(this), 500);
-   // })
- 
+            this.assets.fire.play();
+            this.tir.push(new Tir(this.x,this.y+15,this.orientationVaisseau,this.ctx));
+            this.peutTirer = false;
+            setTimeout((() => {
+                this.peutTirer = true;
+            }).bind(this), 500);
         }
     }
-    
-    /*const sleep = (milliseconds) => {
-        return new Promise(resolve => setTimeout(resolve, milliseconds));
-    }   
-    */
 }

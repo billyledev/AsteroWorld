@@ -7,20 +7,44 @@ export function loadAssets(assetsToBeLoaded, callback)
     let loadedAssets = 0;
     let numberOfAssetsToLoad = Object.keys(assetsToBeLoaded).length;
 
+    function isImage(url)
+    {
+        return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+    }
+
     if (numberOfAssetsToLoad != 0)
     {
         for (let name in assetsToBeLoaded)
         {
             let url = assetsToBeLoaded[name].url;
 
-            assetsLoaded[name] = new Image();
-            assetsLoaded[name].addEventListener('load', () => {
-                if (++loadedAssets >= numberOfAssetsToLoad)
-                {
-                    callback(assetsLoaded);
-                }
-            });
-            assetsLoaded[name].src = url;
+            if (isImage(url))
+            {
+                assetsLoaded[name] = new Image();
+                assetsLoaded[name].addEventListener('load', () => {
+                    if (++loadedAssets >= numberOfAssetsToLoad)
+                    {
+                        callback(assetsLoaded);
+                    }
+                });
+                assetsLoaded[name].src = url;
+            }
+            else
+            {
+                assetsLoaded[name] = new Howl({
+                    src: [url],
+                    buffer: assetsToBeLoaded[name].buffer,
+                    loop: assetsToBeLoaded[name].loop,
+                    autoplay: false,
+                    volume: assetsToBeLoaded[name].volume,
+                    onload: function () {
+                        if (++loadedAssets >= numberOfAssetsToLoad)
+                        {
+                            callback(assetsLoaded);
+                        }
+                    }
+                });
+            }
         }
     }
     else

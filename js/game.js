@@ -10,8 +10,22 @@ let assetsToLoad = {
     // nomImage: { url: 'https://example.org/image.png' }
     asteroidSmall: { url: './js/image/AsteroidSolo_small.png' },
     asteroidMedium: { url: './js/image/AsteroidSolo_medium.png' },
-    asteroidLarge: { url: './js/image/AsteroidSolo_large.png' }
+    asteroidLarge: { url: './js/image/AsteroidSolo_large.png' },
+    vaisseau5: { url: './js/Image/Vaisseau5.png' },
+    vaisseau52: { url: './js/Image/Vaisseau5_2.png' },
+    vaisseau53: { url: './js/Image/Vaisseau5_3.png' },
+    //Ajoute tous les sons
+    thrust: {url:'../sound/thrust.wav', buffer:false, loop:false, volume:0.9},
+    fire: {url:'../sound/fire.wav', buffer:false, loop:false, volume:0.9},
+    bangSmall: {url:'../sound/bangSmall.wav', buffer:false, loop:false, volume:0.9},
+    bangMedium: {url:'../sound/bangMedium.wav', buffer:false, loop:false, volume:0.9},
+    bangLarge: {url:'../sound/bangLarge.wav', buffer:false, loop:false, volume:0.9},
+    //ajout de la musique du jeu
+    track1: {url:'../sound/disfigure-blank-ncs-release.mp3', buffer:false, loop:true, volume:0.2},
+    
 };
+
+
 
 //Fonction appelée à la fin du chargement du DOM
 window.addEventListener('load', () => {
@@ -35,7 +49,7 @@ class Game
         this.bestScore= [];
         this.end = false;
         this.vie = 3;
-        this.peutPerdreVie = true;
+        this.peutPerdreVie = false;
 
         //État du jeu (menu | game | scores)
         this.state = 'menu';
@@ -61,14 +75,20 @@ class Game
 
         this.keyboard = new Keyboard();
 
+        this.vaisseau = new Vaisseau(this.ctx.canvas.clientWidth/2,this.ctx.canvas.clientHeight/2,0,this.ctx,this.keyboard,this.assets,this);
+
         //Création de l'asteroid du début
-        this.createAsteroid(5,'large');
+        this.createAsteroid(2,'large');
         this.checkWave();
         let changeState = state => { this.state = state};
         this.menu = new Menu(this.ctx, this.keyboard, changeState);
         this.scoresScreen = new ScoresScreen(this.ctx, this.keyboard, changeState);
-        
-        this.vaisseau = new Vaisseau(100,100,0,this.ctx,this.keyboard,this);
+
+        this.assets.track1.play();
+        setTimeout((() => {
+                    this.peutPerdreVie = true;      
+                }).bind(this),2000);
+
         this.checkAsteroids();
         requestAnimationFrame(this.animate.bind(this));
     }
@@ -77,7 +97,6 @@ class Game
     animate()
     {
         this.ctx.clearRect(0, 0, this.width, this.height);
-
         switch (this.state)
         {
             case 'menu':
@@ -123,7 +142,11 @@ class Game
                 this.ctx.fillText(this.score, this.width / 2, 300 + 60);
 
                 this.ctx.restore();
-                break;
+                
+                setTimeout((() => {
+                    this.state='menu';  
+                }).bind(this),10000);
+                break;  
             }
         }
         
@@ -132,8 +155,30 @@ class Game
 
     createAsteroid(n, size){   
         for (let i=0;i<n * this.wave;i++){
-            let posX = Math.random() * this.ctx.canvas.clientWidth ;
-            let posY = Math.random() * this.ctx.canvas.clientHeight ;
+            let posX, posY;
+
+            let randomPos = Math.floor(Math.random()*2);
+            if (randomPos == 0)
+            {
+                posX = - Math.random() * 200 ;
+                posY = Math.random() * this.ctx.canvas.clientHeight ;
+            }
+            else if (randomPos == 1)
+            {
+                posX = Math.random() * 200 + this.ctx.canvas.clientWidth ;
+                posY = - Math.random() * this.ctx.canvas.clientHeight ;
+            }
+            else if (randomPos == 2)
+            {
+                posX = Math.random() * this.ctx.canvas.clientWidth ;
+                posY = - Math.random() * 200;
+            }
+            else
+            {
+                posX = Math.random() * this.ctx.canvas.clientWidth ;
+                posY = - Math.random() * 200 + this.ctx.canvas.clientHeight ;
+            }
+
             let velo =  2;
             this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size));
         }
@@ -163,17 +208,53 @@ class Game
         var vaisseau=this.vaisseau;
         document.getElementById("vie").innerHTML=this.vie;
         this.asteroids.forEach(function(element) {
-            if(vaisseau.x < element.posX+element.width && vaisseau.x > element.posX-element.width && vaisseau.y < element.posY+element.height && vaisseau.y > element.posY-element.height && this.peutPerdreVie){
+
+            if((vaisseau.x - vaisseau.width/2 > element.posX && vaisseau.x - vaisseau.width/2 < element.posX + element.width &&
+                vaisseau.y - vaisseau.height/2 > element.posY && vaisseau.y - vaisseau.height/2 < element.posY + element.height || //Point haut gauche
+                
+                vaisseau.x + vaisseau.width/2 > element.posX && vaisseau.x + vaisseau.width/2 < element.posX + element.width &&
+                vaisseau.y + vaisseau.height/2 > element.posY && vaisseau.y + vaisseau.height/2 < element.posY + element.height || //Point bas droite
+                
+                vaisseau.x + vaisseau.width/2 > element.posX && vaisseau.x + vaisseau.width/2 < element.posX + element.width &&
+                vaisseau.y - vaisseau.height/2 > element.posY && vaisseau.y - vaisseau.height/2 < element.posY + element.height || //Point haut droite
+                
+                vaisseau.x - vaisseau.width/2 > element.posX && vaisseau.x - vaisseau.width/2 < element.posX + element.width &&
+                vaisseau.y + vaisseau.height/2 > element.posY && vaisseau.y + vaisseau.height/2 < element.posY + element.height) && //Point bas gauche
+                this.peutPerdreVie)
+            {
                 this.vie--;
                 this.peutPerdreVie = false;
-                if(this.vie <=0){
+                vaisseau.x=this.width/2;
+                vaisseau.y=this.height/2;
+                if(this.vie <= 0){
                     this.state = "mort";
+                    let scores = JSON.parse(localStorage.getItem('highscores'));
+                    scores.push(this.score);
+                    scores.sort((a, b) => {
+                        return b - a;
+                    });
+                    if (scores.length > 10){
+                        scores.splice(10);
+                    }
+                    localStorage.setItem('highscores', JSON.stringify(scores));
                 }
                 setTimeout((() => {
                     this.peutPerdreVie = true;      
                 }).bind(this),2000);
             }
-        
+
+            if (this.debug)
+            {
+                this.ctx.beginPath();
+                this.ctx.fillStyle = '#FF0000';
+                this.ctx.arc(vaisseau.x, vaisseau.y, 5, 0, 2*Math.PI, false);
+                this.ctx.fill();
+                this.ctx.strokeStyle = '#0000FF';
+                this.ctx.strokeRect(vaisseau.x - vaisseau.width/2, vaisseau.y - vaisseau.width/2,
+                    vaisseau.width, vaisseau.height);
+                this.ctx.strokeStyle = '#00FF00';
+                this.ctx.strokeRect(element.posX, element.posY, element.width, element.height);
+            }
         }.bind(this));
         
     }
@@ -181,25 +262,26 @@ class Game
     checkAsteroids(){
         for(let i =0; i<this.asteroids.length;i++){
             for (let z=0;z<this.vaisseau.tir.length;z++){
-               // console.log("x:" + this.vaisseau.tir[z].x + "y:" + this.vaisseau.tir[z].y);
                 if(this.asteroids[i].exist){
                     if(this.vaisseau.tir[z].x < this.asteroids[i].posX + this.asteroids[i].size.width && this.vaisseau.tir[z].x > this.asteroids[i].posX - this.asteroids[i].size.width && this.vaisseau.tir[z].y < this.asteroids[i].posY + this.asteroids[i].size.height && this.vaisseau.tir[z].y > this.asteroids[i].posY - this.asteroids[i].size.height){
                         let posX = this.asteroids[i].posX;
                         let posY = this.asteroids[i].posY;
                         let size = this.asteroids[i].size;
-                      //  this.asteroids.splice(i,1);
                         this.vaisseau.tir.splice(z,1);
                         this.score += this.asteroids[i].score * this.wave;
                         document.getElementById("score").innerHTML=this.score;
                         switch (this.asteroids[i].size.name){
                           case 'small':{
+                            this.assets.bangSmall.play();
                             break;
                           }
                           case 'medium':{
+                            this.assets.bangMedium.play();
                             this.createAsteroid2(2, 'small', posX, posY);
                             break;
                           }
                           case 'large':{
+                            this.assets.bangLarge.play();
                             this.createAsteroid2(2, 'medium', posX, posY);
                             break;
                           }
@@ -220,21 +302,4 @@ class Game
         }
         setTimeout(this.checkAsteroids.bind(this), 50);
     }
-
-    bestScore(){
-        if(this.end == true){
-            //ajouter le score au tableau
-            this.bestScore.push(this.score);
-            this.bestScore.sort();
-            if (this.bestScore.length > 10){
-                this.bestScore = this.bestScore.splice(10);
-            }
-            let bestscoreStr = JSON.stringify(this.bestScore);
-            localStorage.setItem('bestScore',bestscoreStr);
-        }
-    }
-    
 }
-
-
-

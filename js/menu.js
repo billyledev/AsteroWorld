@@ -73,7 +73,7 @@ export class Menu
     {
         setTimeout(() => {
             this.canPressKey = true;
-        }, 100);
+        }, 200);
     }
 
     draw()
