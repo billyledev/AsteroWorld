@@ -20,6 +20,17 @@ div{
     color:white;
 }
 
+ul {
+    list-style:none;
+    margin-left:0;
+    padding-left:0;
+}
+
+li {
+    color:white;
+    margin-bottom:15px;/* à adapter */
+}
+
 #stars {
     width: 1px;
     height: 1px;
