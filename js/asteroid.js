@@ -59,11 +59,11 @@ export class Asteroid {
       this.calcOrientation();
     } 
     else if(this.posY < -(this.height)){
-      this.posY = this.ctx.canvas.clientHeigh + this.height;
+      this.posY = this.ctx.canvas.clientHeight + this.height;
       this.calcOrientation();
     } 
-
-
+    if(isNaN(this.posX)||isNaN(this.posY))
+      console.log("X:"+this.posX+" Y"+this.posY);
   }
   //Calcule l'angle 
   calcOrientation(){
