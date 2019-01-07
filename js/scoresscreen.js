@@ -20,7 +20,7 @@ export class ScoresScreen
     
     refreshScores()
     {
-        this.highscores = JSON.parse(localStorage.getItem('bestScore'));
+        this.highscores = JSON.parse(localStorage.getItem('highscores'));
     }
 
     draw()
