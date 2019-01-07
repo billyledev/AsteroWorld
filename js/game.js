@@ -44,7 +44,7 @@ class Game
         //On récupère les ressources chargées au lancement
         this.assets = assets;
         this.asteroids = [];
-        this.wave= 1;
+        this.wave= 0;
         this.score = 0;
         this.bestScore= [];
         this.end = false;
@@ -53,7 +53,7 @@ class Game
 
         //État du jeu (menu | game | scores)
         this.state = 'menu';
-        this.checkWaveNb = 0;
+        this.checkWaveNb = 1;
         if (localStorage.getItem('highscores') == null)
         {
             localStorage.setItem('highscores', JSON.stringify([]));
@@ -178,7 +178,7 @@ class Game
                 posX = Math.random() * this.ctx.canvas.clientWidth ;
                 posY = - Math.random() * 200 + this.ctx.canvas.clientHeight ;
             }
-
+            console.log("X:"+posX+" Y:"+posY+"randomPos"+randomPos);
             let velo =  2;
             this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size));
         }
@@ -194,13 +194,13 @@ class Game
           this.wave+=1;
           this.createAsteroid(5,'large');
         }
-        if (this.checkWaveNb % 3 == 0 && this.checkWaveNb <= 30)
+        /*if (this.wave % 3 == 0 && this.wave <= 30)
         {
             this.createAsteroid(1 * this.wave,'large');
-        }
-
-        this.checkWaveNb++;
+        }*/
         setTimeout(this.checkWave.bind(this), 1000);
+       
+        
     }
     
     collisionVaisseauAsteroide(){
