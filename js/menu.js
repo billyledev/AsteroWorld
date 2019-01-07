@@ -7,6 +7,8 @@ export class Menu
         this.width = this.ctx.canvas.clientWidth;
         this.height = this.ctx.canvas.clientHeight;
         this.changeState = changeState;
+        //Time between keypress
+        this.timeout = 200;
 
         //Indique l'élément sélectionné dans le menu
         this.selected = 0;
@@ -24,14 +26,14 @@ export class Menu
         {
             this.selected--;
             this.canPressKey = false;
-            this.setKeyboardTimeout();
+            this.setKeyboardTimeout(this.timeout);
         }
         
         if (this.keyboard.keys.down && this.canPressKey)
         {
             this.selected++;
             this.canPressKey = false;
-            this.setKeyboardTimeout();
+            this.setKeyboardTimeout(this.timeout);
         }
 
         if (this.selected < 0)
@@ -69,11 +71,11 @@ export class Menu
         }
     }
 
-    setKeyboardTimeout()
+    setKeyboardTimeout(timeout)
     {
         setTimeout(() => {
             this.canPressKey = true;
-        }, 200);
+        }, timeout);
     }
 
     draw()

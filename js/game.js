@@ -50,6 +50,7 @@ class Game
         this.end = false;
         this.vie = 3;
         this.peutPerdreVie = false;
+        this.peutAppuyerTouche = false;
 
         //État du jeu (menu | game | scores)
         this.state = 'menu';
@@ -137,15 +138,18 @@ class Game
                 this.ctx.font = '26px Verdana';
                 this.ctx.fillText("Vous etes mort", this.width / 2, 250 + 60);
                 
-               
                 this.ctx.fillText("Votre score est", this.width / 4, 300 + 60);
                 this.ctx.fillText(this.score, this.width / 2, 300 + 60);
 
                 this.ctx.restore();
-                
-                setTimeout((() => {
-                    this.state='menu';  
-                }).bind(this),10000);
+
+                if ((this.keyboard.keys.down || this.keyboard.keys.up || this.keyboard.keys.left) && this.peutAppuyerTouche)
+                {
+                    this.state = 'menu';
+                    this.peutAppuyerTouche = false;
+                    this.menu.setKeyboardTimeout(1000);
+                }
+
                 break;  
             }
         }
@@ -237,9 +241,14 @@ class Game
                         scores.splice(10);
                     }
                     localStorage.setItem('highscores', JSON.stringify(scores));
+                    this.vie = 3;
+                    this.vaisseau.vitesse = 0;
+                    setTimeout((() => {
+                        this.peutAppuyerTouche = true;
+                    }).bind(this), 1000);
                 }
                 setTimeout((() => {
-                    this.peutPerdreVie = true;      
+                    this.peutPerdreVie = true;
                 }).bind(this),2000);
             }
 
