@@ -87,8 +87,8 @@ class Game
 
         this.assets.track1.play();
         setTimeout((() => {
-                    this.peutPerdreVie = true;      
-                }).bind(this),2000);
+            this.peutPerdreVie = true;      
+        }).bind(this),2000);
 
         this.checkAsteroids();
         requestAnimationFrame(this.animate.bind(this));
@@ -147,6 +147,9 @@ class Game
                 {
                     this.state = 'menu';
                     this.peutAppuyerTouche = false;
+                    this.score = 0;
+                    this.asteroids = [];
+                    this.createAsteroid(2,'large');
                     this.menu.setKeyboardTimeout(1000);
                 }
 
@@ -169,7 +172,7 @@ class Game
             }
             else if (randomPos == 1)
             {
-                posX = Math.random() * 200 + this.ctx.canvas.clientWidth ;
+                posX = Math.random() * this.ctx.canvas.clientWidth + 200 ;
                 posY = - Math.random() * this.ctx.canvas.clientHeight ;
             }
             else if (randomPos == 2)
@@ -180,9 +183,8 @@ class Game
             else
             {
                 posX = Math.random() * this.ctx.canvas.clientWidth ;
-                posY = - Math.random() * 200 + this.ctx.canvas.clientHeight ;
+                posY = - Math.random() * this.ctx.canvas.clientHeight + 200 ;
             }
-            console.log("X:"+posX+" Y:"+posY+"randomPos"+randomPos);
             let velo =  2;
             this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size));
         }
@@ -243,6 +245,7 @@ class Game
                     localStorage.setItem('highscores', JSON.stringify(scores));
                     this.vie = 3;
                     this.vaisseau.vitesse = 0;
+                    this.vaisseau.tir = [];
                     setTimeout((() => {
                         this.peutAppuyerTouche = true;
                     }).bind(this), 1000);

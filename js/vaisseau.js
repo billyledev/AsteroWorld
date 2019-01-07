@@ -136,7 +136,7 @@ export class Vaisseau{
         for (let i = 0; i < 10; i++)
         {
             let size = Math.random() * 3 + 1;
-            let randomizer = Math.random() * 6 - 3;
+            let randomizer = (Math.random() * 90 - 45)*Math.PI/180;
             let life = Math.random() * 1500;
             let vx = -Math.cos(this.orientationDeplacement + randomizer);
             let vy = -Math.sin(this.orientationDeplacement + randomizer);
