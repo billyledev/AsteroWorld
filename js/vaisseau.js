@@ -1,4 +1,5 @@
 import { Tir } from './tir.js';
+import { Particule } from './particule.js';
 
 
 export class Vaisseau{
@@ -24,6 +25,8 @@ export class Vaisseau{
         
         this.peutTirer = true;
         let timer=true;
+        this.particles = [];
+        this.particlesColors = ['#f44242', '#f45f41', '#f47641', '#f49441', '#f4a941', '#f4be41', '#f4d641', '#f4ee41'];
     }
     
 
@@ -54,7 +57,19 @@ export class Vaisseau{
                     this.tir.splice(i,1);
                 }   
             }
-        }           
+        }   
+        
+        for (let i = 0; i < this.particles.length; i++)
+        {
+            if (this.particles[i].exists)
+            {
+                this.particles[i].draw();
+            }
+            else
+            {
+                this.particles.splice(i, 1);
+            }
+        }
     }
     
     
@@ -74,6 +89,7 @@ export class Vaisseau{
                 this.vitesse += 0.08;
             }
             this.orientationDeplacement = this.orientationVaisseau;
+            this.ejecterParticules();
         }
         else
         {
@@ -112,6 +128,22 @@ export class Vaisseau{
             setTimeout((() => {
                 this.peutTirer = true;
             }).bind(this), 500);
+        }
+    }
+
+    ejecterParticules()
+    {
+        for (let i = 0; i < 10; i++)
+        {
+            let size = Math.random() * 3 + 1;
+            let randomizer = Math.random() * 6 - 3;
+            let life = Math.random() * 1500;
+            let vx = -Math.cos(this.orientationDeplacement + randomizer);
+            let vy = -Math.sin(this.orientationDeplacement + randomizer);
+            let x = this.x + -16*Math.cos(this.orientationDeplacement);
+            let y = this.y + -16*Math.sin(this.orientationDeplacement);
+            let color = this.particlesColors[Math.floor(Math.random()*this.particlesColors.length)];
+            this.particles.push(new Particule(x, y, vx, vy, size, color, life, this.ctx));
         }
     }
 }
