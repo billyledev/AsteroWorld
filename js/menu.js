@@ -17,6 +17,7 @@ export class Menu
         this.elements = [
             'Jouer',
             'Scores',
+            'Boutique',
             'Quitter'
         ];
         this.canPressKey = true;
@@ -55,6 +56,9 @@ export class Menu
                 case 0:
                 {
                     this.changeState('jeu');
+                    setTimeout((() => {
+                        this.game.vaisseau.peutTirer = true;
+                    }).bind(this), 200);            
                     break;
                 }
 
@@ -68,6 +72,16 @@ export class Menu
                 }
 
                 case 2:
+                {
+                    this.changeState('boutique');
+                    this.game.shop.canPressKey = false;
+                    setTimeout((() => {
+                        this.game.shop.canPressKey = true;
+                    }).bind(this), 200);
+                    break;
+                }
+
+                case 3:
                 {
                     document.location.href = 'http://google.fr';
                     break;

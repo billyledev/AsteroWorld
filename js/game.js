@@ -6,12 +6,25 @@ import { Vaisseau } from './vaisseau.js';
 //import { Tir } from './tir.js';
 import { ScoresScreen } from './scoresscreen.js';
 import { Particule } from './particule.js';
+import { Shop } from './shop.js';
 
 let assetsToLoad = {
     // nomImage: { url: 'https://example.org/image.png' }
     asteroidSmall: { url: './js/Image/AsteroidSolo_small.png' },
     asteroidMedium: { url: './js/Image/AsteroidSolo_medium.png' },
     asteroidLarge: { url: './js/Image/AsteroidSolo_large.png' },
+    vaisseau1: { url: './js/Image/Vaisseau1.png'},
+    vaisseau12: { url: './js/Image/Vaisseau1_2.png' },
+    vaisseau13: { url: './js/Image/Vaisseau1_3.png' },
+    vaisseau2: { url: './js/Image/Vaisseau2.png' },
+    vaisseau22: { url: './js/Image/Vaisseau2_2.png' },
+    vaisseau23: { url: './js/Image/Vaisseau2_3.png' },
+    vaisseau3: { url: './js/Image/Vaisseau3.png' },
+    vaisseau32: { url: './js/Image/Vaisseau3_2.png' },
+    vaisseau33: { url: './js/Image/Vaisseau3_3.png' },
+    vaisseau4: { url: './js/Image/Vaisseau4.png' },
+    vaisseau42: { url: './js/Image/Vaisseau4_2.png' },
+    vaisseau43: { url: './js/Image/Vaisseau4_3.png' },
     vaisseau5: { url: './js/Image/Vaisseau5.png' },
     vaisseau52: { url: './js/Image/Vaisseau5_2.png' },
     vaisseau53: { url: './js/Image/Vaisseau5_3.png' },
@@ -22,7 +35,7 @@ let assetsToLoad = {
     bangMedium: {url:'./sound/bangMedium.wav', buffer:false, loop:false, volume:0.9},
     bangLarge: {url:'./sound/bangLarge.wav', buffer:false, loop:false, volume:0.9},
     //ajout de la musique du jeu
-    track1: {url:'./sound/disfigure-blank-ncs-release.mp3', buffer:false, loop:true, volume:0.05},
+    track1: {url:'./sound/disfigure-blank-ncs-release.mp3', buffer:false, loop:true, volume:0.01},
     
 };
 
@@ -66,6 +79,25 @@ class Game
         {
             localStorage.setItem('highscores', JSON.stringify([]));
         }
+
+        if (localStorage.getItem('pieces') == null)
+        {
+            localStorage.setItem('pieces', 0);
+        }
+        this.pieces = parseInt(localStorage.getItem('pieces'));
+        document.getElementById('pieces').innerText = this.pieces;
+
+        if (localStorage.getItem('achats') == null)
+        {
+            localStorage.setItem('achats', JSON.stringify([5]));
+        }
+        this.achats = JSON.parse(localStorage.getItem('achats'));
+
+        if (localStorage.getItem('vaisseauActuel') == null)
+        {
+            localStorage.setItem('vaisseauActuel', 5);
+        }
+        this.vaisseauActuel = localStorage.getItem('vaisseauActuel');
     }
 
     //Gère l'initialisation du jeu
@@ -84,13 +116,14 @@ class Game
         this.keyboard = new Keyboard();
 
         this.vaisseau = new Vaisseau(this.ctx.canvas.clientWidth/2,this.ctx.canvas.clientHeight/2,0,this.ctx,this.keyboard,this.assets,this);
-
+        
         //Création de l'asteroid du début
         //this.createAsteroid(2,'large');
         this.checkWave();
         let changeState = state => { this.state = state};
         this.menu = new Menu(this.ctx, this.keyboard, changeState, this);
         this.scoresScreen = new ScoresScreen(this.ctx, this.keyboard, changeState, this.menu);
+        this.shop = new Shop(this.ctx, this);
 
         this.assets.track1.play();
         setTimeout((() => {
@@ -143,6 +176,13 @@ class Game
                 this.scoresScreen.draw();
                 break;
             }
+
+            case 'boutique':
+            {
+                this.shop.draw();
+                break;
+            }
+
             case 'mort':
             {
                 this.ctx.save();
@@ -167,7 +207,12 @@ class Game
                 {
                     this.state = 'menu';
                     this.peutAppuyerTouche = false;
+
+                    this.pieces += this.score;
+                    localStorage.setItem('pieces', this.pieces);
+                    document.getElementById('pieces').innerText = this.pieces;
                     this.score = 0;
+
                     document.getElementById("score").innerHTML=this.score;
                     this.asteroids = [];
                     this.wave = 1;
@@ -302,6 +347,7 @@ class Game
                     this.vie = 3;
                     this.vaisseau.vitesse = 0;
                     this.vaisseau.tir = [];
+                    this.vaisseau.peutTirer = false;
                     document.getElementById("vie").innerHTML=0;
                     setTimeout((() => {
                         this.peutAppuyerTouche = true;
