@@ -38,7 +38,13 @@ Le joueur a 3 vies, qui peuvent être vue en haut à droite de l'écran.
 ## But du jeu
 
 Tirer sur un maximum d'astéroides pour accumuler des points et réaliser le meilleur score.
+Avoir un bon score rapporte de l'argent, qui permet d'acheter des améliorations dans la boutique
 Le joueur peut voir son score en temps réel en haut à droite de son écran.
+
+## Boutique
+
+Après un certain nombres de parties vous accumulerez assez de pièces pour pouvoir acheter de nouveaux vaisseaux.
+Les nouveaux vaisseaux vous permettront d'avoir de meilleurs scores grâce à de nouvelles stats, comme une amélioration de vitesse, ou de vitesse de tir.
 
 ## Jeu 
 
