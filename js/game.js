@@ -9,9 +9,9 @@ import { Particule } from './particule.js';
 
 let assetsToLoad = {
     // nomImage: { url: 'https://example.org/image.png' }
-    asteroidSmall: { url: './js/image/AsteroidSolo_small.png' },
-    asteroidMedium: { url: './js/image/AsteroidSolo_medium.png' },
-    asteroidLarge: { url: './js/image/AsteroidSolo_large.png' },
+    asteroidSmall: { url: './js/Image/AsteroidSolo_small.png' },
+    asteroidMedium: { url: './js/Image/AsteroidSolo_medium.png' },
+    asteroidLarge: { url: './js/Image/AsteroidSolo_large.png' },
     vaisseau5: { url: './js/Image/Vaisseau5.png' },
     vaisseau52: { url: './js/Image/Vaisseau5_2.png' },
     vaisseau53: { url: './js/Image/Vaisseau5_3.png' },
