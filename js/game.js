@@ -168,8 +168,11 @@ class Game
                     this.state = 'menu';
                     this.peutAppuyerTouche = false;
                     this.score = 0;
+                    document.getElementById("score").innerHTML=this.score;
                     this.asteroids = [];
                     this.wave = 1;
+                    this.vaisseau.x = this.canvas.width / 2;
+                    this.vaisseau.y = this.canvas.height / 2;
                     //this.createAsteroid(2,'large');
 
                     this.menu.canPressKey = false;
@@ -299,6 +302,7 @@ class Game
                     this.vie = 3;
                     this.vaisseau.vitesse = 0;
                     this.vaisseau.tir = [];
+                    document.getElementById("vie").innerHTML=0;
                     setTimeout((() => {
                         this.peutAppuyerTouche = true;
                     }).bind(this), 1000);
