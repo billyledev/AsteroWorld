@@ -29,28 +29,33 @@ export class Keyboard
             //Utilisation de code qui ne dépend pas de la disposition du clavier
             switch (event.code)
             {
-                case 'KeyW':
+                case 'KeyW': case 'ArrowUp':
                 {
                     this.keys.up = true;
                     break;
                 }
 
-                case 'KeyA':
+                case 'KeyA': case 'ArrowLeft':
                 {
                     this.keys.left = true;
                     break;
                 }
 
-                case 'KeyS':
+                case 'KeyS': case 'ArrowDown':
                 {
                     this.keys.down = true;
                     break;
                 }
 
-                case 'KeyD':
+                case 'KeyD': case 'ArrowRight':
                 {
                     this.keys.right = true;
                     break;
+                }
+
+                case 'Space':
+                {
+                    this.keys.space = true;
                 }
 
                 default:
@@ -72,32 +77,39 @@ export class Keyboard
             //Utilisation de code qui ne dépend pas de la disposition du clavier
             switch (event.code)
             {
-                case 'KeyW':
+                case 'KeyW': case 'ArrowUp':
                 {
                     this.keys.up = false;
                     break;
                 }
 
-                case 'KeyA':
+                case 'KeyA': case 'ArrowLeft':
                 {
                     this.keys.left = false;
                     break;
                 }
 
-                case 'KeyS':
+                case 'KeyS': case 'ArrowDown':
                 {
                     this.keys.down = false;
                     break;
                 }
 
-                case 'KeyD':
+                case 'KeyD': case 'ArrowRight':
                 {
                     this.keys.right = false;
                     break;
                 }
 
+                case 'Space':
+                {
+                    this.keys.space = false;
+                    break;
+                }
+
                 default:
                 {
+                    console.log(event.code);
                     return;
                 }
             }
