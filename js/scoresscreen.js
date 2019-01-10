@@ -1,20 +1,26 @@
 export class ScoresScreen
 {
-    constructor(ctx, keyboard, changeState)
+    constructor(ctx, keyboard, changeState, menu)
     {
         this.ctx = ctx;
         this.keyboard = keyboard;
         this.width = this.ctx.canvas.clientWidth;
         this.height = this.ctx.canvas.clientHeight;
         this.changeState = changeState;
+        this.canPressKey = false;
+        this.menu = menu;
         this.refreshScores();
     }
 
     checkKeyboard()
     {
-        if (this.keyboard.keys.left)
+        if (this.keyboard.keys.space && this.canPressKey)
         {
+            this.menu.canPressKey = false;
+            this.menu.setKeyboardTimeout(200);
+
             this.changeState('menu');
+            this.canPressKey = false;
         }
     }
     

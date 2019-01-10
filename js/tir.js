@@ -5,7 +5,7 @@ export class Tir{
         this.orientation=orientation;
         this.ctx=ctx;
         this.img = new Image();
-        this.vitesse=4;
+        this.vitesse=8;
         this.img.src = './js/Image/tir1.png';
     }
     

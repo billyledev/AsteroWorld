@@ -56,6 +56,7 @@ export class Keyboard
                 case 'Space':
                 {
                     this.keys.space = true;
+                    break;
                 }
 
                 default:
@@ -109,7 +110,6 @@ export class Keyboard
 
                 default:
                 {
-                    console.log(event.code);
                     return;
                 }
             }

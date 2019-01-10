@@ -1,11 +1,18 @@
 export class Asteroid {
 
-  constructor(posX, posY, velo, assets, ctx, size) {
+  constructor(posX, posY, velo, assets, ctx, size, orientation) {
   	this.ctx = ctx;
   	this.assets = assets;
     this.posX = posX;
     this.posY = posY;
-    this.calcOrientation();
+    if (orientation == 0)
+    {
+      this.calcOrientation();
+    }
+    else
+    {
+      this.orientation = orientation;
+    }
     this.velo = velo;
     this.SizeEnum = {
 	  SMALL: {name: "small", value: 1, width:15, height:14, img: assets.asteroidSmall, score:15},

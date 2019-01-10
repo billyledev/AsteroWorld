@@ -3,8 +3,9 @@ import { Keyboard } from './keyboard.js';
 import { Asteroid} from './asteroid.js';
 import { Menu } from './menu.js';
 import { Vaisseau } from './vaisseau.js';
-import { Tir } from './tir.js';
+//import { Tir } from './tir.js';
 import { ScoresScreen } from './scoresscreen.js';
+import { Particule } from './particule.js';
 
 let assetsToLoad = {
     // nomImage: { url: 'https://example.org/image.png' }
@@ -21,7 +22,7 @@ let assetsToLoad = {
     bangMedium: {url:'./sound/bangMedium.wav', buffer:false, loop:false, volume:0.9},
     bangLarge: {url:'./sound/bangLarge.wav', buffer:false, loop:false, volume:0.9},
     //ajout de la musique du jeu
-    track1: {url:'./sound/disfigure-blank-ncs-release.mp3', buffer:false, loop:true, volume:0.2},
+    track1: {url:'./sound/disfigure-blank-ncs-release.mp3', buffer:false, loop:true, volume:0.05},
     
 };
 
@@ -52,6 +53,12 @@ class Game
         this.peutPerdreVie = false;
         this.peutAppuyerTouche = false;
 
+        this.particles = [];
+        this.particlesColorsAsteroid = ['#9A9A9A', '#BBBBBB', '#D4D4D4', '#898989'];
+        this.particlesColorsVaisseau = ['#f44242', '#f45f41', '#f47641', '#f49441', '#f4a941', '#f4be41', '#f4d641', '#f4ee41'];
+
+        this.wiggleNb = 0;
+
         //État du jeu (menu | game | scores)
         this.state = 'menu';
         this.checkWaveNb = 1;
@@ -79,11 +86,11 @@ class Game
         this.vaisseau = new Vaisseau(this.ctx.canvas.clientWidth/2,this.ctx.canvas.clientHeight/2,0,this.ctx,this.keyboard,this.assets,this);
 
         //Création de l'asteroid du début
-        this.createAsteroid(2,'large');
+        //this.createAsteroid(2,'large');
         this.checkWave();
         let changeState = state => { this.state = state};
-        this.menu = new Menu(this.ctx, this.keyboard, changeState);
-        this.scoresScreen = new ScoresScreen(this.ctx, this.keyboard, changeState);
+        this.menu = new Menu(this.ctx, this.keyboard, changeState, this);
+        this.scoresScreen = new ScoresScreen(this.ctx, this.keyboard, changeState, this.menu);
 
         this.assets.track1.play();
         setTimeout((() => {
@@ -112,7 +119,20 @@ class Game
 
                 for(let i = 0; i<this.asteroids.length; i++){
                     this.asteroids[i].draw();
-                }   
+                }
+
+                for (let i = 0; i < this.particles.length; i++)
+                {
+                    if (this.particles[i].exists)
+                    {
+                        this.particles[i].draw();
+                    }
+                    else
+                    {
+                        this.particles.splice(i, 1);
+                    }
+                }
+
                 this.collisionVaisseauAsteroide();
                 break;
             }
@@ -138,19 +158,22 @@ class Game
                 this.ctx.font = '26px Verdana';
                 this.ctx.fillText("Vous etes mort", this.width / 2, 250 + 60);
                 
-                this.ctx.fillText("Votre score est", this.width / 4, 300 + 60);
-                this.ctx.fillText(this.score, this.width / 2, 300 + 60);
+                this.ctx.fillText("Votre score est " + this.score, this.width / 2, 300 + 60);
+            
 
                 this.ctx.restore();
 
-                if ((this.keyboard.keys.down || this.keyboard.keys.up || this.keyboard.keys.left) && this.peutAppuyerTouche)
+                if (this.keyboard.keys.space && this.peutAppuyerTouche)
                 {
                     this.state = 'menu';
                     this.peutAppuyerTouche = false;
                     this.score = 0;
                     this.asteroids = [];
-                    this.createAsteroid(2,'large');
-                    this.menu.setKeyboardTimeout(1000);
+                    this.wave = 1;
+                    //this.createAsteroid(2,'large');
+
+                    this.menu.canPressKey = false;
+                    this.menu.setKeyboardTimeout(500);
                 }
 
                 break;  
@@ -161,7 +184,7 @@ class Game
     }
 
     createAsteroid(n, size){   
-        for (let i=0;i<n * this.wave;i++){
+        for (let i=0;i<n;i++){
             let posX, posY;
 
             let randomPos = Math.floor(Math.random()*2);
@@ -186,19 +209,20 @@ class Game
                 posY = - Math.random() * this.ctx.canvas.clientHeight + 200 ;
             }
             let velo =  2;
-            this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size));
+            this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size, 0));
         }
     }
-    createAsteroid2(n, size, posX, posY){   
-        for (let i=0;i<n * this.wave;i++){
-            let velo =  2;
-            this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size));
-        }
+    createAsteroid2(size, posX, posY, orientation){
+        let velo = 2;
+        let randomizer = (Math.random() * 45)*Math.PI/180;
+
+        this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size, (orientation+randomizer)+Math.PI/2));
+        this.asteroids.push(new Asteroid(posX, posY, velo, this.assets, this.ctx, size, (orientation-randomizer)+Math.PI/2));
     }
     checkWave(){
         if (this.asteroids.length == 0){
-          this.wave+=1;
-          this.createAsteroid(5,'large');
+          this.createAsteroid(this.wave * 2,'large');
+          this.wave += 1;
         }
         /*if (this.wave % 3 == 0 && this.wave <= 30)
         {
@@ -229,9 +253,38 @@ class Game
                 this.peutPerdreVie)
             {
                 this.vie--;
+
+                switch (element.size.name)
+                {
+                    case 'large':
+                    {
+                        this.assets.bangLarge.play();
+                        this.wiggleScreen(0, 0, false, 20, 40);
+                        this.createAsteroid2('medium', element.posX, element.posY, vaisseau.orientationDeplacement);
+                        this.ejecterParticules(element.posX, element.posY, 240, 6);
+                        break;
+                    }
+
+                    case 'medium':
+                    {
+                        this.assets.bangMedium.play();
+                        this.wiggleScreen(0, 0, false, 20, 20);
+                        this.createAsteroid2('small', element.posX, element.posY, vaisseau.orientationDeplacement);
+                        this.ejecterParticules(element.posX, element.posY, 120, 6);
+                        break;
+                    }
+
+                    case 'small':
+                    {
+                        this.assets.bangSmall.play();
+                        this.wiggleScreen(0, 0, false, 10, 10);
+                        this.ejecterParticules(element.posX, element.posY, 60, 3);
+                        break;
+                    }        
+                }
+                element.exist = false;
+
                 this.peutPerdreVie = false;
-                vaisseau.x=this.width/2;
-                vaisseau.y=this.height/2;
                 if(this.vie <= 0){
                     this.state = "mort";
                     let scores = JSON.parse(localStorage.getItem('highscores'));
@@ -279,22 +332,26 @@ class Game
                         let posX = this.asteroids[i].posX;
                         let posY = this.asteroids[i].posY;
                         let size = this.asteroids[i].size;
+                        let tirOrientation = this.vaisseau.tir[z].orientation;
                         this.vaisseau.tir.splice(z,1);
                         this.score += this.asteroids[i].score * this.wave;
                         document.getElementById("score").innerHTML=this.score;
-                        switch (this.asteroids[i].size.name){
+                        switch (size.name){
                           case 'small':{
                             this.assets.bangSmall.play();
+                            this.ejecterParticules(posX, posY, 60, 3);
                             break;
                           }
                           case 'medium':{
                             this.assets.bangMedium.play();
-                            this.createAsteroid2(2, 'small', posX, posY);
+                            this.createAsteroid2('small', posX, posY, tirOrientation);
+                            this.ejecterParticules(posX, posY, 120, 6);
                             break;
                           }
                           case 'large':{
                             this.assets.bangLarge.play();
-                            this.createAsteroid2(2, 'medium', posX, posY);
+                            this.createAsteroid2('medium', posX, posY, tirOrientation);
+                            this.ejecterParticules(posX, posY, 240, 6);
                             break;
                           }
                         }
@@ -313,5 +370,51 @@ class Game
             }
         }
         setTimeout(this.checkAsteroids.bind(this), 50);
+    }
+
+    ejecterParticules(x, y, nb, size)
+    {
+        for (let i = 0; i < nb; i++)
+        {
+            size = Math.random() * size + 1;
+            let randomizer = (Math.random() * 360)*Math.PI/180;
+            let life = Math.random() * 1500;
+            let vx = -Math.cos(randomizer);
+            let vy = -Math.sin(randomizer);
+            x = x + Math.cos(randomizer);
+            y = y + Math.sin(randomizer);
+            let color = this.particlesColorsAsteroid[Math.floor(Math.random()*this.particlesColorsAsteroid.length)];
+            this.particles.push(new Particule(x, y, vx, vy, size, color, life, this.ctx));
+        }
+    }
+
+    wiggleScreen(wiggleX, wiggleY, wiggleBack, wiggleSize, wiggleTimeout)
+    {
+        if ((wiggleX == 0 && wiggleY == 0) || wiggleBack == false)
+        {
+            wiggleX = Math.random() * wiggleSize + 1;
+            wiggleY = Math.random() * wiggleSize + 1;
+        }
+
+        if (wiggleBack)
+        {
+            wiggleX = -wiggleX;
+            wiggleY = -wiggleY;
+        }
+
+        if (this.wiggleNb < 20 && this.vie > 0)
+        {
+            this.ctx.translate(wiggleX, wiggleY);
+
+            setTimeout((() => {
+                this.wiggleScreen(wiggleX, wiggleY, !wiggleBack, wiggleSize, wiggleTimeout);
+            }).bind(this), wiggleTimeout);
+
+            this.wiggleNb++;
+        }
+        else
+        {
+            this.wiggleNb = 0;
+        }
     }
 }

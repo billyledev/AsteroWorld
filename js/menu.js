@@ -1,6 +1,6 @@
 export class Menu
 {
-    constructor(ctx, keyboard, changeState)
+    constructor(ctx, keyboard, changeState, game)
     {
         this.ctx = ctx;
         this.keyboard = keyboard;
@@ -9,6 +9,8 @@ export class Menu
         this.changeState = changeState;
         //Time between keypress
         this.timeout = 200;
+
+        this.game = game;
 
         //Indique l'élément sélectionné dans le menu
         this.selected = 0;
@@ -46,7 +48,7 @@ export class Menu
             this.selected = 0;
         }
 
-        if (this.keyboard.keys.right && this.canPressKey)
+        if (this.keyboard.keys.space && this.canPressKey)
         {
             switch (this.selected)
             {
@@ -59,6 +61,9 @@ export class Menu
                 case 1:
                 {
                     this.changeState('scores');
+                    setTimeout((() => {
+                        this.game.scoresScreen.canPressKey = true;
+                    }).bind(this), 200);
                     break;
                 }
 

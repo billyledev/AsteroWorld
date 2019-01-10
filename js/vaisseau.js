@@ -121,13 +121,15 @@ export class Vaisseau{
     }
     
     tirer(){
-        if(this.keyboard.keys.down && this.peutTirer){
+        if(this.keyboard.keys.space && this.peutTirer){
             this.assets.fire.play();
-            this.tir.push(new Tir(this.x,this.y+15,this.orientationVaisseau,this.ctx));
+            this.tir.push(new Tir(this.x-4 + 8*Math.cos(this.orientationVaisseau),
+                                    this.y-4 + 8*Math.sin(this.orientationVaisseau),
+                                    this.orientationVaisseau,this.ctx));
             this.peutTirer = false;
             setTimeout((() => {
                 this.peutTirer = true;
-            }).bind(this), 500);
+            }).bind(this), 250);
         }
     }
 
