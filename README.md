@@ -46,16 +46,6 @@ Le joueur peut voir son score en temps réel en haut à droite de son écran.
 Après un certain nombres de parties vous accumulerez assez de pièces pour pouvoir acheter de nouveaux vaisseaux.
 Les nouveaux vaisseaux vous permettront d'avoir de meilleurs scores grâce à de nouvelles stats, comme une amélioration de vitesse, ou de vitesse de tir.
 
-## Jeu 
-
-Disponible sur http://www.samuelcavaco.fr/GestionDeProjetsL3MIAGE/game.html
-
-## Contributeurs du projet
-
-    * Custodio Cavaco Samuel
-    * La Selva Clément
-    * Martin François
-
 ## Modules fonctionnels
 
 * Vaisseau:
@@ -98,3 +88,14 @@ Disponible sur http://www.samuelcavaco.fr/GestionDeProjetsL3MIAGE/game.html
 * Ajout de nouveaux vaisseaux
 * Ajout de nouvelles musiques
 * Ajout de nouveaux "mondes"
+
+## Jeu 
+
+Disponible sur http://www.samuelcavaco.fr/projet/game.html
+
+## Contributeurs du projet
+
+    * Custodio Cavaco Samuel
+    * La Selva Clément
+    * Martin François
+    
