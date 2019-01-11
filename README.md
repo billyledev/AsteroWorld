@@ -55,3 +55,46 @@ Disponible sur http://www.samuelcavaco.fr/GestionDeProjetsL3MIAGE/game.html
     * Custodio Cavaco Samuel
     * La Selva Clément
     * Martin François
+
+## Modules fonctionnels
+
+* Vaisseau:
+	* Déplacement
+	* Tir
+	* Collision
+	* Apparance
+	* Spécificité 
+	* Particules
+	* Vies
+	* Invicibilité temporaire
+
+* Astéroides:
+	* Déplacement
+	* Collision
+	* Apparance
+	* Particules 
+
+* Boutique:
+	* Système de devise
+	* Achat de vaisseaux
+	* Choix du vaisseau
+
+* Score:
+	* Stockage en local
+	* Mis à jour 
+	* Top 10 scores
+
+* Jeu:
+	* Menu 
+	* Jeu qui tremble
+	* Musique
+	* Son
+	* Jeu sans fin
+
+## A faire
+
+* Multijoueur en coopération en ligne [en cours]
+* Menu pause
+* Ajout de nouveaux vaisseaux
+* Ajout de nouvelles musiques
+* Ajout de nouveaux "mondes"
