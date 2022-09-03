@@ -91,7 +91,7 @@ Les nouveaux vaisseaux vous permettront d'avoir de meilleurs scores grâce à de
 
 ## Jeu 
 
-Disponible sur http://www.samuelcavaco.fr/projet/game.html
+Disponible sur https://billyledev.github.io/AsteroWorld/game.html
 
 ## Contributeurs du projet
 
